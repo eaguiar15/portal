@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/portal.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+    <link rel="icon" href="icon.png">
+    <title>Home</title>
+</head>
+<body>
+    <div class="topbar" id="topbar">
+        <div class="status-online" id="status-online">
+             <div></div><span>Online</span>
+        </div>
+        <div class="status-offline" id="status-offline">
+             <div></div><span>Offline</span>
+        </div>
+        <ul>
+            <li>
+                <button class="active" onclick="toggleMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </li>
+        </ul>
+    </div>
+    <div class="rightbar" id="rightbar">
+        <ul>
+            <li>
+                <span>representantes@xalingo.com.br</span>
+                <button >
+                    <i class="fas fa-times-circle" onclick="toggleMenu()"></i>
+                </button>
+            </li>
+            <li>
+                <button >
+                    <i class="fas fa-home"></i><span>Home</span>
+                </button>
+            </li>
+            <li>
+                <button>
+                    <i class="fas fa-wallet"></i><span>Pedidos</span>
+                </button>
+            </li>
+            <li>
+                <button>
+                    <i class="fas fa-user-tie"></i><span>Clientes</span>
+                </button>
+            </li>
+            <li>
+                <button class="active">
+                    <i class="fas fa-th"></i><span>Produtos</span>
+                </button>
+            </li>
+            <li>
+                <button>
+                    <i class="fas fa-sign-out-alt"></i><span><a href="login.html">Sair</a></span>
+                </button>
+            </li>
+        </ul>
+    </div>
+    <div class="sidebar" id="sidebar">
+        <ul>
+            <li><button></button></li>
+            <li>
+                <button >
+                    <i class="fas fa-home"></i>
+                    <div>Home</div>
+                </button>
+            </li>
+            <li>
+                <button >
+                    <i class="fas fa-wallet"></i>
+                    <div>Pedidos</div>
+                </button>
+            </li>
+            <li>
+                <button >
+                    <i class="fas fa-user-tie"></i>
+                    <div>Clientes</div>
+                </button>
+            </li>
+            <li>
+                <button class="active">
+                    <i class="fas fa-th"></i>
+                    <div>Produtos</div>
+                </button>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="main">
+       <h1>Produtos</h1>
+       <div class="card">
+            <input type="text" class="input-small">
+            <button class="button-small" onclick="getProdutos()">Filtrar</button>
+       </div>
+       <h3>Lista de Produtos</h3>
+       <div class="painel">
+           <table class="tProdutos" id="tProdutos">
+               <thead>
+                   <tr>
+                       <th>Cód</th>
+                       <th>Produto</th>
+                       <th>Categoria</th>
+                       <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+     </div>
+</body>
+</html>
+<script src="js/portal.js"></script>
