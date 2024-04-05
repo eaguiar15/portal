@@ -23,14 +23,45 @@ window.onload = checkConnection;
 window.addEventListener('online', checkConnection);
 window.addEventListener('offline', checkConnection);
 
-function toggleMenu(){
-    var sidebar = document.getElementById("rightbar");
-    if(sidebar.className.indexOf("menu-active") == -1){
-        sidebar.classList.toggle("menu-active");
-    }else{
-        sidebar.classList.remove("menu-active");
-
+function toggleMenu(pMenu,pElem){
+    var rightbar = document.getElementById("rightbar");
+    var sidebar = document.getElementById("sidebar");
+    
+    if( typeof pMenu == "undefined" ){
+        if(rightbar.className.indexOf("menu-active") == -1){
+            rightbar.classList.toggle("menu-active");
+        }else{
+            rightbar.classList.remove("menu-active");
+        }
     }
+
+    if( typeof pMenu !== "undefined" ){
+
+        document.getElementById("painel-produtos").classList.remove("show");
+        document.getElementById("painel-sync").classList.remove("show");
+
+        var buttons = rightbar.getElementsByTagName('button');
+
+        for (var i = 0; i < buttons.length; i++) {
+            buttons[i].classList.remove("active");
+            if(buttons[i].textContent.trim() == pElem.textContent.trim()){
+                buttons[i].classList.toggle("active");
+            }
+        }
+
+        var buttons = sidebar.getElementsByTagName('button');
+
+        for (var i = 0; i < buttons.length; i++) {
+            buttons[i].classList.remove("active");
+            if(buttons[i].textContent.trim() == pElem.textContent.trim()){
+                buttons[i].classList.toggle("active");
+            }
+        }
+
+        document.getElementById(pMenu).classList.toggle("show");
+        rightbar.classList.remove("menu-active");
+    }
+
 }
 
 var ws;
@@ -55,7 +86,7 @@ function getProdutos(){
                 "<td> " + json[a].cd_produto + "</td>" + 
                 "<td> " + json[a].nm_produto + "</td>" + 
                 "<td> " + json[a].nm_grupo_produto + "</td>" + 
-                "<td> " + json[a].vl_preco_produto + "</td>" + 
+                "<td> " + json[a].vl_preco_produto.toFixed(2) + "</td>" + 
                 "</tr>" ;
             }
             console.log(ws.responseText);

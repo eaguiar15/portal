@@ -25,6 +25,10 @@ h3{
     font-weight: bold;;
 }
 
+i{
+    cursor:pointer;
+}
+
 a{
     color:white;
     text-decoration: none;;
@@ -69,6 +73,8 @@ thead{
     text-align: right;
 }
 
+
+
 .container{
     width: 100%;
     height: 95vh;
@@ -98,10 +104,38 @@ thead{
     align-items: center;
 }
 
+.card-grid-header{
+    height: 40px;
+    width:100%;
+    border-bottom:1px solid lightgray;
+    display: flex;
+    align-items: center;
+}
+
+.card-grid-header span{
+    margin-left:15px;
+    color:var(--primary);
+    font-weight: bold;;
+}
+
+.card-grid-body{
+    width:100%;
+}
+
+.card-grid-body div{
+    width:50%;
+    float:left;
+}
+
+
 .painel{
     display: block;
     width: 100%;
     overflow-x: auto;
+}
+
+.main{
+    display:none;
 }
  
 @media screen and (max-width: 600px) { /* mobile */
@@ -377,5 +411,20 @@ button:hover{
     width:7px;
 }
 
+.show{
+    display:block;
+}
 
+.hide{
+    display: none;
+}
+
+.painel-sync div{
+    width:100%;
+    text-align: center;
+}
+
+.painel-sync h3{
+    text-align:center;
+}
 

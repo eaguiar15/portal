@@ -11,10 +11,12 @@
 <body>
     <div class="topbar" id="topbar">
         <div class="status-online" id="status-online">
-             <div></div><span>Online</span>
+              <div title="Online"></div>
+              <!--<span>Online</span> -->
         </div>
         <div class="status-offline" id="status-offline">
-             <div></div><span>Offline</span>
+             <div title="Offline"></div>
+             <!--<span>Offline</span> -->
         </div>
         <ul>
             <li>
@@ -48,8 +50,13 @@
                 </button>
             </li>
             <li>
-                <button class="active">
+                <button class="active" onclick="toggleMenu('painel-produtos',this)">
                     <i class="fas fa-th"></i><span>Produtos</span>
+                </button>
+            </li>
+            <li>
+                <button onclick="toggleMenu('painel-sync',this)">
+                    <i class="fas fa-sync"></i><span>Sincronizar</span>
                 </button>
             </li>
             <li>
@@ -69,7 +76,7 @@
                 </button>
             </li>
             <li>
-                <button >
+                <button>
                     <i class="fas fa-wallet"></i>
                     <div>Pedidos</div>
                 </button>
@@ -81,23 +88,33 @@
                 </button>
             </li>
             <li>
-                <button class="active">
+                <button class="active" onclick="toggleMenu('painel-produtos',this)">
                     <i class="fas fa-th"></i>
                     <div>Produtos</div>
+                </button>
+            </li>
+            <li>
+                <button onclick="toggleMenu('painel-sync',this)">
+                    <i class="fas fa-sync"></i><div>Sincronizar</div>
+                </button>
+            </li>
+            <li>
+                <button title="representante@xalingo.com.br">
+                    <i class="fas fa-sign-out-alt"></i><div><a href="login.html">Sair</a></div>
                 </button>
             </li>
             
         </ul>
     </div>
-    <div class="main">
+    <div class="main show" id="painel-produtos" >
        <h1>Produtos</h1>
        <div class="card">
             <input type="text" class="input-small">
             <button class="button-small" onclick="getProdutos()">Filtrar</button>
        </div>
-       <h3>Lista de Produtos</h3>
+        <h3 >Lista de Produtos    <i class="fas fa-th "></i> </h3>
        <div class="painel">
-           <table class="tProdutos" id="tProdutos">
+           <table class="tProdutos hide" id="tProdutos">
                <thead>
                    <tr>
                        <th>Cód</th>
@@ -106,10 +123,36 @@
                        <th>Valor</th>
                     </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody>
+                    <td>52909</td><td> BINGO PEDRAS DE MADEIRA                          </td><td> JOGOS E BRINQUEDOS-MADEIRA </td><td> 38.20</td></tr><tr><td> 04968</td><td> CADEIRINHA DE PAPAR</td><td> JOGOS E BRINQUEDOS-MADEIRA </td><td> 24.30</td></tr><tr><td> 66610</td><td> DESAFIO DA MATEMÁTICA - MINHA ESCOLINHA</td><td> JOGOS E BRINQUEDOS-MADEIRA </td><td> 24.00</td></tr><tr><td> 53021</td><td> DOMINÓ PINGOS COLORIDOS - CX MADEIRA</td><td> JOGOS E BRINQUEDOS-MADEIRA </td><td> 28.30</td>   
+                </tbody>
             </table>
+            <div class="card" style="display:block;height: 200px;">
+                <div class="card-grid-header"><span>59909 -  BINGO PEDRAS DE MADEIRA</span></div>
+                <div class="card-grid-body">
+                     <div>
+                        lkl<br>ssss
+                     </div>
+                     <div>
+                        2
+
+                     </div>
+                </div>
+            </div>
         </div>
      </div>
+     <div class="main" id="painel-sync" >
+        <h1>Sincronização</h1>
+        <div class="card painel-sync" >
+            <div >
+                <h3>Produtos</h3>
+            </div>
+            <div >
+                <button class="button-small">Sincronizar</button>
+            </div>
+        </div>
+        
+      </div>
 </body>
 </html>
 <script src="js/portal.js"></script>
