@@ -75,12 +75,17 @@ function initWS(pURL,pMethod){
 
 function getProdutos(){
     checkConnection();
+    openModal();
+    return;
     initWS("produtos","POST"); 
     ws.onreadystatechange = function(){
         if ( ws.readyState == 4 && ws.status == 200 ) {
             json = JSON.parse(ws.responseText);
-            table = document.getElementById("tProdutos").children[1];
+            table = document.getElementById("table-produtos").children[1];
             table.innerHTML = "";
+            grid = document.getElementById("grid-produtos");
+            grid.innerHTML = "";
+
             for(let a in json){
                 table.innerHTML+="<tr>" + 
                 "<td> " + json[a].cd_produto + "</td>" + 
@@ -88,9 +93,55 @@ function getProdutos(){
                 "<td> " + json[a].nm_grupo_produto + "</td>" + 
                 "<td> " + json[a].vl_preco_produto.toFixed(2) + "</td>" + 
                 "</tr>" ;
+
+                grid.innerHTML+=
+                " <div class='card show' style='height: 200px;' >" +
+                "   <div class='card-grid-header'><span>" + json[a].cd_produto + " -  " + json[a].nm_produto + "</span></div>" +
+                "       <div class='card-grid-body'>" + 
+                "            <div class='card-grid-body-img'> " +
+                "            <img src='"+ json[a].url_imagem + "'> " +
+                "       </div> " +
+                "       <div class='card-grid-body-item'> " +
+                "               <div style='width:calc(100% - 10px);text-align:center'>" + json[a].nm_grupo_produto + "</div> " +
+                "       </div> " +
+                "        <div class='card-grid-body-item'> " +
+                "                <div>Medidas</div> " +
+                "                <div>0 x 0 x 0</div> " +
+                "         </div> " +
+                "       <div class='card-grid-body-item'> " +
+                "                <div>Preço</div> " +
+                "                <div>" + json[a].vl_preco_produto.toFixed(2) + " R$</div> " +
+                "       </div> " +
+                "     </div> " + 
+                "</div>" +
+                "<br>";
             }
-            console.log(ws.responseText);
+
+            
         }
     }
     ws.send();
 }
+
+function showGrid(pElem){
+    
+    if(pElem.className.indexOf("table") == -1){
+        pElem.className = "fas fa-table";
+        document.getElementById("grid-produtos").classList.remove("hide");
+        document.getElementById("table-produtos").classList.toggle("hide");
+    }else{
+        pElem.className = "fas fa-th";
+        document.getElementById("grid-produtos").classList.toggle("hide");
+        document.getElementById("table-produtos").classList.remove("hide");
+        
+    }
+}
+
+function openModal() {
+    document.getElementById('myModal').style.display = 'flex';
+  }
+
+  // Função para fechar o modal
+  function closeModal() {
+    document.getElementById('myModal').style.display = 'none';
+  }

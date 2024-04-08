@@ -34,9 +34,17 @@ a{
     text-decoration: none;;
 }
 
+img:not(:valid) {
+    background-image: url('../img/noimage.png');     
+    background-size: cover;
+    background-position: center; 
+}
+
+
 table{
     width: 90%;
     border-collapse: collapse;
+    
     white-space: nowrap;
 }
 
@@ -127,10 +135,43 @@ thead{
     float:left;
 }
 
+.card-grid-body-img{
+    text-align: center;
+}
+
+.card-grid-body-img img{
+    width:150px;
+    height:150px;
+}
+
+
+.card-grid-body-item div{
+    
+    margin-top:5px;
+    font-size: 12px;
+    line-height: 18px;
+    color: var(--cor-cinza);
+}
+
+.card-grid-body-item div:first-child{
+    color:var(--primary);
+    font-weight: bold;;
+    width:40%;
+}
+
+.card-grid-body-item div:last-child{
+    text-align: right;
+    width:calc(60% - 10px);
+    /* white-space: nowrap; */
+    font-size:11px;
+    color:rgb(102, 110, 122)
+}
+
 
 .painel{
     display: block;
     width: 100%;
+    /* height: 80vh; */
     overflow-x: auto;
 }
 

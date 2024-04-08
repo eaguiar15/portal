@@ -112,9 +112,9 @@
             <input type="text" class="input-small">
             <button class="button-small" onclick="getProdutos()">Filtrar</button>
        </div>
-        <h3 >Lista de Produtos    <i class="fas fa-th "></i> </h3>
+        <h3 >Lista de Produtos    <i class="fas fa-th " onclick="showGrid(this)"></i> </h3>
        <div class="painel">
-           <table class="tProdutos hide" id="tProdutos">
+           <table class="tProdutos " id="table-produtos">
                <thead>
                    <tr>
                        <th>Cód</th>
@@ -127,21 +127,74 @@
                     <td>52909</td><td> BINGO PEDRAS DE MADEIRA                          </td><td> JOGOS E BRINQUEDOS-MADEIRA </td><td> 38.20</td></tr><tr><td> 04968</td><td> CADEIRINHA DE PAPAR</td><td> JOGOS E BRINQUEDOS-MADEIRA </td><td> 24.30</td></tr><tr><td> 66610</td><td> DESAFIO DA MATEMÁTICA - MINHA ESCOLINHA</td><td> JOGOS E BRINQUEDOS-MADEIRA </td><td> 24.00</td></tr><tr><td> 53021</td><td> DOMINÓ PINGOS COLORIDOS - CX MADEIRA</td><td> JOGOS E BRINQUEDOS-MADEIRA </td><td> 28.30</td>   
                 </tbody>
             </table>
-            <div class="card" style="display:block;height: 200px;">
-                <div class="card-grid-header"><span>59909 -  BINGO PEDRAS DE MADEIRA</span></div>
-                <div class="card-grid-body">
-                     <div>
-                        lkl<br>ssss
-                     </div>
-                     <div>
-                        2
-
-                     </div>
+            <div  class="hide" id="grid-produtos">
+                <div class="card show" style="height: 200px;" >
+                    <div class="card-grid-header"><span>59909 -  BINGO PEDRAS DE MADEIRA</span></div>
+                    <div class="card-grid-body">
+                        <div class="card-grid-body-img">
+                            <img src="https://xalingo.vteximg.com.br/arquivos/ids/159202-1000-1000/1327.6---Ludo-Tridimensional-Spidey.jpg?v=63827100650l230000" >
+                        </div>
+                        <div class="card-grid-body-item">
+                                <div>Categoria</div><div>Brinquedos</div>
+                        </div>
+                        <div class="card-grid-body-item">
+                                <div>Medidas</div>
+                                <div>20 x 24 x10</div>
+                        </div>
+                        <div class="card-grid-body-item">
+                                <div>Preço</div>
+                                <div>19.50 R$</div>
+                        </div>
+                        
+                    </div>
                 </div>
             </div>
         </div>
-     </div>
-     <div class="main" id="painel-sync" >
+        <div id="myModal" class="modal" style="display:flex">
+            <div class="modal-content">
+              <span onclick="closeModal()" style="cursor: pointer; float: right;">&times;</span>
+              <h1>Filtro Produtos</h1>
+              <div>
+                    <table>
+                        <tr>
+                            <td><h3>Código</h3></td>
+                            <td><input type=number></td>
+                        </tr>
+                        <tr>
+                            <td><h3>Nome</h3></td>
+                            <td><input type=text></td>
+                        </tr>
+                        <tr>
+                            <td><h3>Categoria</h3></td>
+                            <td>
+                                <select>
+                                    <option>JOGOS E BRINQUEDOS-MADEIRA</option>
+                                    <option>TRICICLOS MADEIRA </option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><h3>Registros</h3></td>
+                            <td><select>
+                                <option>50</option>
+                                <option>100</option>
+                                <option>1000</option>
+                                <option>Todos</option>
+                            </select></td>
+                        </tr>
+
+                    </table>
+                   
+              </div>
+              
+              <br>
+              <br>
+              <button class="butto">Filtrar</button>
+            </div>
+          </div>
+    </div>
+    <!-- sincronização -->
+    <div class="main" id="painel-sync" >
         <h1>Sincronização</h1>
         <div class="card painel-sync" >
             <div >
@@ -153,6 +206,7 @@
         </div>
         
       </div>
+    
 </body>
 </html>
 <script src="js/portal.js"></script>
