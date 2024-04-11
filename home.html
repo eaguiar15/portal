@@ -109,23 +109,23 @@
     <div class="main show" id="painel-produtos" >
        <h1>Produtos</h1>
        <div class="card">
-            <input type="text" class="input-small">
-            <button class="button-small" onclick="getProdutos()">Filtrar</button>
+            <input type="text" class="input-small" id="input-filter-produtos" onkeydown="if (event.key === 'Enter') getProdutos()">
+            <button class="button-small-icon" onclick="openModal()" title="Filtrar"><i class="fas fa-filter "></i></button>
+            <button class="button-small" onclick="getProdutos()">Pesquisar</button>
        </div>
         <h3 >Lista de Produtos    <i class="fas fa-th " onclick="showGrid(this)"></i> </h3>
        <div class="painel">
            <table class="tProdutos " id="table-produtos">
                <thead>
                    <tr>
+                       <th>#</th>
                        <th>Cód</th>
                        <th>Produto</th>
                        <th>Categoria</th>
                        <th>Valor</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <td>52909</td><td> BINGO PEDRAS DE MADEIRA                          </td><td> JOGOS E BRINQUEDOS-MADEIRA </td><td> 38.20</td></tr><tr><td> 04968</td><td> CADEIRINHA DE PAPAR</td><td> JOGOS E BRINQUEDOS-MADEIRA </td><td> 24.30</td></tr><tr><td> 66610</td><td> DESAFIO DA MATEMÁTICA - MINHA ESCOLINHA</td><td> JOGOS E BRINQUEDOS-MADEIRA </td><td> 24.00</td></tr><tr><td> 53021</td><td> DOMINÓ PINGOS COLORIDOS - CX MADEIRA</td><td> JOGOS E BRINQUEDOS-MADEIRA </td><td> 28.30</td>   
-                </tbody>
+                <tbody></tbody>
             </table>
             <div  class="hide" id="grid-produtos">
                 <div class="card show" style="height: 200px;" >
@@ -150,46 +150,62 @@
                 </div>
             </div>
         </div>
-        <div id="myModal" class="modal" style="display:flex">
+        <div id="myModal" class="modal" >
             <div class="modal-content">
               <span onclick="closeModal()" style="cursor: pointer; float: right;">&times;</span>
               <h1>Filtro Produtos</h1>
               <div>
-                    <table>
-                        <tr>
-                            <td><h3>Código</h3></td>
-                            <td><input type=number></td>
-                        </tr>
-                        <tr>
-                            <td><h3>Nome</h3></td>
-                            <td><input type=text></td>
-                        </tr>
-                        <tr>
-                            <td><h3>Categoria</h3></td>
-                            <td>
-                                <select>
-                                    <option>JOGOS E BRINQUEDOS-MADEIRA</option>
-                                    <option>TRICICLOS MADEIRA </option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><h3>Registros</h3></td>
-                            <td><select>
-                                <option>50</option>
-                                <option>100</option>
-                                <option>1000</option>
-                                <option>Todos</option>
-                            </select></td>
-                        </tr>
+                    <form id="filter-produtos">
+                        <table>
+                            <tr>
+                                <td><h3>Código</h3></td>
+                                <td><input type=number name="P_CD_PRODUTO"></td>
+                            </tr>
+                            <tr>
+                                <td><h3>Nome</h3></td>
+                                <td><input type=text name="P_NM_PRODUTO"></td>
+                            </tr>
+                            <tr>
+                                <td><h3>Categoria</h3></td>
+                                <td>
+                                    <select name="P_CD_GRUPO_PRODUTO">
+                                        <option value=0></option>
+                                        <option value=1072>ESCOLAR-MADEIRA            </option>
+                                        <option value=1082>ESCRITORIO-MADEIRA         </option>
+                                        <option value=1032>ESPORTE E LAZER-MADEIRA    </option>
+                                        <option value=1141>FUMAGEIRAS-PLASTICO        </option>
+                                        <option value=1151>IMPORTADOS-DIVERSOS        </option>
+                                        <option value=1022>JOGOS E BRINQUEDOS-MADEIRA </option>
+                                        <option value=1021>JOGOS E BRINQUEDOS-PLASTICO</option>
+                                        <option value=1062>PEDAGOGICOS-MADEIRA        </option>
+                                        <option value=1921>PRODUTOS INOMAX-PLASTICO   </option>
+                                        <option value=1051>ROTOMOLDADOS-PLASTICO      </option>
+                                        <option value=1923>SERVICOS INOMAX            </option>
+                                        <option value=1011>TRICICLOS-PLASTICO         </option>
+                                        <option value=1101>UTILIDADES-PLASTICO        </option>
+                                        <option value=1042>XADREZ-MADEIRA             </option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><h3>Registros</h3></td>
+                                <td>
+                                    <select name="P_NR_REGISTRO">
+                                        <option value=50>50</option>
+                                        <option value=100>100</option>
+                                        <option value=1000>1000</option>
+                                        <option value=100000>Todos</option>
+                                    </select>
+                                </td>
+                            </tr>
 
-                    </table>
-                   
+                        </table>
+                   </form>
               </div>
               
+              <br> 
               <br>
-              <br>
-              <button class="butto">Filtrar</button>
+              <button onclick="getProdutos();closeModal();">Filtrar</button>
             </div>
           </div>
     </div>
@@ -201,7 +217,7 @@
                 <h3>Produtos</h3>
             </div>
             <div >
-                <button class="button-small">Sincronizar</button>
+                <button class="button-small" onclick="syncProdutos(this)">Sincronizar</button>
             </div>
         </div>
         
@@ -209,4 +225,5 @@
     
 </body>
 </html>
+<script src="js/database.js"></script>
 <script src="js/portal.js"></script>

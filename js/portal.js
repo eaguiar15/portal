@@ -1,6 +1,7 @@
+var jProdutos;
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('service-worker.js')
+        navigator.serviceWorker.register('service-worker.js')
         .then(registration => console.log('Service Worker registrado com sucesso:', registration))
         .catch(error => console.log('Erro ao registrar o Service Worker:', error));
     });
@@ -22,6 +23,8 @@ function checkConnection() {
 window.onload = checkConnection;
 window.addEventListener('online', checkConnection);
 window.addEventListener('offline', checkConnection);
+
+
 
 function toggleMenu(pMenu,pElem){
     var rightbar = document.getElementById("rightbar");
@@ -60,6 +63,10 @@ function toggleMenu(pMenu,pElem){
 
         document.getElementById(pMenu).classList.toggle("show");
         rightbar.classList.remove("menu-active");
+
+        if(pMenu == "painel-produtos"){
+            getProdutos();
+        }
     }
 
 }
@@ -73,54 +80,124 @@ function initWS(pURL,pMethod){
     //ws.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
 }
 
-function getProdutos(){
-    checkConnection();
-    openModal();
-    return;
-    initWS("produtos","POST"); 
+
+function syncProdutos(pElem){
+    pElem.style.background = "#fbf7ea";
+    ws = new XMLHttpRequest();
+    ws.open("GET",url + "produtos?P_ROWS=99999",true);
     ws.onreadystatechange = function(){
         if ( ws.readyState == 4 && ws.status == 200 ) {
-            json = JSON.parse(ws.responseText);
-            table = document.getElementById("table-produtos").children[1];
-            table.innerHTML = "";
-            grid = document.getElementById("grid-produtos");
-            grid.innerHTML = "";
-
-            for(let a in json){
-                table.innerHTML+="<tr>" + 
-                "<td> " + json[a].cd_produto + "</td>" + 
-                "<td> " + json[a].nm_produto + "</td>" + 
-                "<td> " + json[a].nm_grupo_produto + "</td>" + 
-                "<td> " + json[a].vl_preco_produto.toFixed(2) + "</td>" + 
-                "</tr>" ;
-
-                grid.innerHTML+=
-                " <div class='card show' style='height: 200px;' >" +
-                "   <div class='card-grid-header'><span>" + json[a].cd_produto + " -  " + json[a].nm_produto + "</span></div>" +
-                "       <div class='card-grid-body'>" + 
-                "            <div class='card-grid-body-img'> " +
-                "            <img src='"+ json[a].url_imagem + "'> " +
-                "       </div> " +
-                "       <div class='card-grid-body-item'> " +
-                "               <div style='width:calc(100% - 10px);text-align:center'>" + json[a].nm_grupo_produto + "</div> " +
-                "       </div> " +
-                "        <div class='card-grid-body-item'> " +
-                "                <div>Medidas</div> " +
-                "                <div>0 x 0 x 0</div> " +
-                "         </div> " +
-                "       <div class='card-grid-body-item'> " +
-                "                <div>Preço</div> " +
-                "                <div>" + json[a].vl_preco_produto.toFixed(2) + " R$</div> " +
-                "       </div> " +
-                "     </div> " + 
-                "</div>" +
-                "<br>";
-            }
-
-            
+            database.produtos = JSON.parse(ws.responseText);
+            update(database);
+            pElem.style.background = "#ffd862";
+            pElem.innerText = "Sincronizado";
         }
     }
     ws.send();
+
+}
+
+
+function getProdutos(){
+    checkConnection();
+    let filter = document.getElementById("filter-produtos");
+    let iName = document.getElementById("input-filter-produtos");
+    if(iName.value.trim() != ""){
+        filter.P_NM_PRODUTO.value = iName.value ;
+        iName.value = "";
+    }
+
+    if(navigator.onLine){
+        ws = new XMLHttpRequest();
+        ws.open("GET",url + "produtos?" + 
+        "P_ROWS=" + filter.P_NR_REGISTRO.value + "&" + 
+        "P_CD_PRODUTO=" + filter.P_CD_PRODUTO.value + "&" + 
+        "P_NM_PRODUTO=" + filter.P_NM_PRODUTO.value + "&" + 
+        "P_CD_GRUPO_PRODUTO=" + filter.P_CD_GRUPO_PRODUTO.value ,true);
+    
+        ws.onreadystatechange = function(){
+            if ( ws.readyState == 4 && ws.status == 200 ) {
+                jProdutos = JSON.parse(ws.responseText);
+                printTableProdutos();
+            }
+        }
+        ws.send();
+    }else{
+        jProdutos = JSON.parse(JSON.stringify(database.produtos));
+        printTableProdutos();
+    }
+
+} 
+
+function printTableProdutos(){
+    let filter = document.getElementById("filter-produtos");
+    table = document.getElementById("table-produtos").children[1];
+    table.innerHTML = "";
+    grid = document.getElementById("grid-produtos");
+    grid.innerHTML = "";
+    
+    let rows = 0;
+    for(let a in jProdutos){
+
+        if((filter.P_CD_PRODUTO.value == jProdutos[a].cd_produto || filter.P_CD_PRODUTO.value == "" ) &&
+            (filter.P_CD_GRUPO_PRODUTO.value == jProdutos[a].cd_grupo_produto || filter.P_CD_GRUPO_PRODUTO.value == 0 ) &&
+            (jProdutos[a].nm_produto.indexOf(filter.P_NM_PRODUTO.value.toUpperCase()) != -1 || filter.P_NM_PRODUTO.value == jProdutos[a].cd_produto ||filter.P_NM_PRODUTO.value == "" )){
+            
+            table.innerHTML+="<tr>" + 
+            "<td> " + (++rows) + "</td>" + 
+            "<td> " + jProdutos[a].cd_produto + "</td>" + 
+            "<td> " + jProdutos[a].nm_produto + "</td>" + 
+            "<td> " + jProdutos[a].nm_grupo_produto + "</td>" + 
+            "<td> " + jProdutos[a].vl_preco_produto.toFixed(2) + "</td>" + 
+            "</tr>" ;
+        }
+
+        if(rows >= filter.P_NR_REGISTRO.value){
+            break;
+        }
+
+    }
+}
+
+function printGridProdutos(){
+    let filter = document.getElementById("filter-produtos");
+    grid = document.getElementById("grid-produtos");
+    grid.innerHTML = "";
+    
+    let rows = 0;
+    for(let a in jProdutos){
+        if((filter.P_CD_PRODUTO.value == jProdutos[a].cd_produto || filter.P_CD_PRODUTO.value == "" ) &&
+           (filter.P_CD_GRUPO_PRODUTO.value == jProdutos[a].cd_grupo_produto || filter.P_CD_GRUPO_PRODUTO.value == 0 ) &&
+           (jProdutos[a].nm_produto.indexOf(filter.P_NM_PRODUTO.value.toUpperCase()) != -1 || filter.P_NM_PRODUTO.value == jProdutos[a].cd_produto ||filter.P_NM_PRODUTO.value == "" )){
+
+            grid.innerHTML+=
+            " <div class='card show' style='height: 200px;' >" +
+            "   <div class='card-grid-header'><span>" + jProdutos[a].cd_produto + " - " + jProdutos[a].nm_produto + "</span></div>" +
+            "       <div class='card-grid-body'>" + 
+            "            <div class='card-grid-body-img'> " +
+            "            <img src='"+ jProdutos[a].url_imagem + "'> " +
+            "       </div> " +
+            "       <div class='card-grid-body-item'> " +
+            "               <div style='width:calc(100% - 10px);text-align:center'>" + jProdutos[a].nm_grupo_produto + "</div> " +
+            "       </div> " +
+            "        <div class='card-grid-body-item'> " +
+            "                <div>Medidas</div> " +
+            "                <div>0 x 0 x 0</div> " +
+            "         </div> " +
+            "       <div class='card-grid-body-item'> " +
+            "                <div>Preço</div> " +
+            "                <div>" + jProdutos[a].vl_preco_produto.toFixed(2) + " R$</div> " +
+            "       </div> " +
+            "     </div> " + 
+            "</div>" +
+            "<br>";
+        }
+
+        if(rows >= filter.P_NR_REGISTRO.value){
+            break;
+        }
+
+    }
 }
 
 function showGrid(pElem){
@@ -129,6 +206,7 @@ function showGrid(pElem){
         pElem.className = "fas fa-table";
         document.getElementById("grid-produtos").classList.remove("hide");
         document.getElementById("table-produtos").classList.toggle("hide");
+        printGridProdutos();
     }else{
         pElem.className = "fas fa-th";
         document.getElementById("grid-produtos").classList.toggle("hide");
@@ -139,9 +217,8 @@ function showGrid(pElem){
 
 function openModal() {
     document.getElementById('myModal').style.display = 'flex';
-  }
+ }
 
-  // Função para fechar o modal
-  function closeModal() {
+function closeModal() {
     document.getElementById('myModal').style.display = 'none';
-  }
+}
