@@ -11,9 +11,15 @@ function init(){
             return;
         }
     }
-}
 
-alert(2);
+    if(page == "home.html"){
+        if(token === null ){
+            window.location = "index.html";
+            return;
+        }
+        document.getElementById("email-login-mob").innerText = localStorage.getItem('email');
+    }
+}
 
 function login(){
     ws = new XMLHttpRequest();

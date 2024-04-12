@@ -86,6 +86,35 @@ select {
     text-align: right;
 }
 
+.form{
+    background:white;
+    border:1px solid lightgray;
+    border-radius:5px;
+}
+
+.form td{
+    /* bordeR:1px solid; */
+    height:20px;
+}
+
+.form tr{
+    height:40px;
+    align-items: center;
+    vertical-align: center;
+    justify-content: center;
+}
+.form table td:first-child{
+    padding-top:15px;
+    text-align: right;
+    width:30%;
+
+}
+
+.form input{
+    
+    padding:0;
+}
+
 .container{
     width: 100%;
     height: 100vh;
@@ -174,8 +203,7 @@ select {
 
 .painel{
     display: block;
-    width: 100%;
-    /* height: 80vh; */
+    width: 90%;
     overflow-x: auto;
 }
 
@@ -211,6 +239,14 @@ select {
 
     h1, h3{
         margin-left:15px;
+    }
+
+    .painel{
+        width: 100%;
+    }
+
+    .form{
+        border:0;
     }
 }
 
@@ -263,6 +299,7 @@ button:hover{
     height:35px;
     font-weight: bold;;
     margin:10px;
+    font-size:11px;
 }
 
 .button-small-icon{
@@ -277,6 +314,16 @@ button:hover{
 
 .button-small-icon:hover{
     background-color: #405392;
+}
+
+.button-secondary{
+    color:white;
+    background-color: #0c3163;
+    border: 1px solid #0c3163;
+}
+
+.button-secondary:hover{
+    background-color: #003581;
 }
 
 .message-error{

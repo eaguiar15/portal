@@ -6,17 +6,15 @@
     <link rel="stylesheet" href="css/portal.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
     <link rel="icon" href="icon.png">
-    <title>Home</title>
+    <title>Portal - Xalingo</title>
 </head>
 <body>
     <div class="topbar" id="topbar">
         <div class="status-online" id="status-online">
               <div title="Online"></div>
-              <!--<span>Online</span> -->
         </div>
         <div class="status-offline" id="status-offline">
              <div title="Offline"></div>
-             <!--<span>Offline</span> -->
         </div>
         <ul>
             <li>
@@ -29,7 +27,7 @@
     <div class="rightbar" id="rightbar">
         <ul>
             <li>
-                <span>representantes@xalingo.com.br</span>
+                <span id="email-login-mob">representantes@xalingo.com.br</span>
                 <button >
                     <i class="fas fa-times-circle" onclick="toggleMenu()"></i>
                 </button>
@@ -45,12 +43,12 @@
                 </button>
             </li>
             <li>
-                <button>
+                <button class="active" onclick="toggleMenu('painel-clientes',this)">
                     <i class="fas fa-user-tie"></i><span>Clientes</span>
                 </button>
             </li>
             <li>
-                <button class="active" onclick="toggleMenu('painel-produtos',this)">
+                <button  onclick="toggleMenu('painel-produtos',this)">
                     <i class="fas fa-th"></i><span>Produtos</span>
                 </button>
             </li>
@@ -82,13 +80,13 @@
                 </button>
             </li>
             <li>
-                <button >
+                <button class="active" onclick="toggleMenu('painel-clientes',this)">
                     <i class="fas fa-user-tie"></i>
                     <div>Clientes</div>
                 </button>
             </li>
             <li>
-                <button class="active" onclick="toggleMenu('painel-produtos',this)">
+                <button  onclick="toggleMenu('painel-produtos',this)">
                     <i class="fas fa-th"></i>
                     <div>Produtos</div>
                 </button>
@@ -106,7 +104,67 @@
             
         </ul>
     </div>
-    <div class="main show" id="painel-produtos" >
+    <!-- painel clientes -->
+    <div class="main show" id="painel-clientes">
+        <div id="painel-clientes-pesquisar" >
+            <h1>Clientes</h1>
+            <div class="card">
+                <input type="text" class="input-small" id="input-filter-clientes" onkeydown="if (event.key === 'Enter') getClientes()">
+                <button class="button-small-icon" onclick="openModal('modal-filter-clientes')" title="Filtrar"><i class="fas fa-filter "></i></button>
+                <button class="button-small" onclick="getClientes()">Pesquisar</button>
+                <button class="button-small button-secondary" onclick="painelClientes('painel-clientes-incluir')">Incluir</button>
+            </div>
+            <h3>Lista de Clientes</h3>
+            <div class="painel">
+                <table >
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Cód</th>
+                            <th>Cliente</th>
+                            <th>CNPJ</th>
+                            <th>Email</th>
+                            </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+        <div id="painel-clientes-incluir" style="display:none">
+             <h1>Clientes - Inclusão</h1>
+             <br>
+
+             <div class="painel form" style="background-color: white;" >
+                <table class="tClientes" >
+                    <thead>
+                    </thead>
+                    <tbody>
+                        
+                         <tr>
+                            <td>Razão Social</td>
+                            <td><input type="text" ></td>
+                        </tr>
+                         <tr>
+                            <td>CNPJ</td>
+                            <td><input type="text" ></td>
+                        </tr>
+                         <tr>
+                            <td>Inscrição Estadual</td>
+                            <td><input type="text"></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br>
+             <button class="button-small" onclick="painelClientes('painel-clientes-pesquisar')">Cancelar</button>
+             <button class="button-small button-secondary" >Salvar</button>
+        </div>
+    </div>
+    <!-- painel produtos-->
+    <div class="main" id="painel-produtos" >
        <h1>Produtos</h1>
        <div class="card">
             <input type="text" class="input-small" id="input-filter-produtos" onkeydown="if (event.key === 'Enter') getProdutos()">

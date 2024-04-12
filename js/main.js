@@ -1,10 +1,10 @@
-if ('serviceWorker' in navigator) {
+/*if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('service-worker.js')
         .then(registration => console.log('Service Worker registrado com sucesso:', registration))
         .catch(error => console.log('Erro ao registrar o Service Worker:', error));
     });
-}
+}*/
 
 function checkConnection() {
     var statusOnline = document.getElementById('status-online');
@@ -25,8 +25,6 @@ window.onload = checkConnection;
 window.addEventListener('online', checkConnection);
 window.addEventListener('offline', checkConnection);
 
-
-
 function toggleMenu(pMenu,pElem){
     var rightbar = document.getElementById("rightbar");
     var sidebar = document.getElementById("sidebar");
@@ -41,6 +39,7 @@ function toggleMenu(pMenu,pElem){
 
     if( typeof pMenu !== "undefined" ){
 
+        document.getElementById("painel-clientes").classList.remove("show");
         document.getElementById("painel-produtos").classList.remove("show");
         document.getElementById("painel-sync").classList.remove("show");
 
@@ -78,7 +77,6 @@ var url = "https://portal.xalingo.com.br/xalingo/xalingo_ws.";
 function initWS(pURL,pMethod){
     ws = new XMLHttpRequest();
     ws.open(pMethod,url + pURL,true);
-    //ws.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
 }
 
 function openModal(name) {
@@ -102,4 +100,11 @@ function showGrid(pElem){
         document.getElementById("table-produtos").classList.remove("hide");
         
     }
+}
+
+function painelClientes(pElem){
+     document.getElementById("painel-clientes-pesquisar").style.display = "none";
+     document.getElementById("painel-clientes-incluir").style.display = "none";
+
+     document.getElementById(pElem).style.display = "";
 }
