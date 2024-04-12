@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/portal.css?3">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icon.png">
+    <title>Login</title>
+</head>
+<body style="background-image: linear-gradient(to bottom right, #042a61, #6788b3);">
+    <div class="container">
+        <div class="login-box">
+            <form id="form-login" action="javascript:login()">
+                <div>
+                    <h2>Portal Representante</h2>
+                </div>
+                <div>
+                    <input  type="email" name="P_EMAIL" placeholder="Informe seu endereço de e-mail" required>
+                </div>
+                <div>
+                    <input  type="password" name="P_PASSWORD" placeholder="Informe sua senha" required>
+                </div>
+                <div>
+                    <button style="margin-top:40px;" type="submit">Login</button>
+                </div> 
+                <div class="message-error" id="login-message"></div>
+            </form>
+            
+        </div>
+    </div>
+</body>
+</html>
+<script src="js/portal.js?3"></script>

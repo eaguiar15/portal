@@ -60,8 +60,8 @@
                 </button>
             </li>
             <li>
-                <button>
-                    <i class="fas fa-sign-out-alt"></i><span><a href="login.html">Sair</a></span>
+                <button onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i><span>Sair</span>
                 </button>
             </li>
         </ul>
@@ -99,8 +99,8 @@
                 </button>
             </li>
             <li>
-                <button title="representante@xalingo.com.br">
-                    <i class="fas fa-sign-out-alt"></i><div><a href="login.html">Sair</a></div>
+                <button title="representante@xalingo.com.br" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i><div>Sair</div>
                 </button>
             </li>
             
@@ -110,10 +110,10 @@
        <h1>Produtos</h1>
        <div class="card">
             <input type="text" class="input-small" id="input-filter-produtos" onkeydown="if (event.key === 'Enter') getProdutos()">
-            <button class="button-small-icon" onclick="openModal()" title="Filtrar"><i class="fas fa-filter "></i></button>
+            <button class="button-small-icon" onclick="openModal('modal-filter-produtos')" title="Filtrar"><i class="fas fa-filter "></i></button>
             <button class="button-small" onclick="getProdutos()">Pesquisar</button>
        </div>
-        <h3 >Lista de Produtos    <i class="fas fa-th " onclick="showGrid(this)"></i> </h3>
+        <h3 >Lista de Produtos    <i class="fas fa-th " onclick="showGrid(this)" id="show-grid-produtos"></i> </h3>
        <div class="painel">
            <table class="tProdutos " id="table-produtos">
                <thead>
@@ -150,9 +150,9 @@
                 </div>
             </div>
         </div>
-        <div id="myModal" class="modal" >
+        <div id="modal-filter-produtos" class="modal" >
             <div class="modal-content">
-              <span onclick="closeModal()" style="cursor: pointer; float: right;">&times;</span>
+              <span onclick="closeModal('modal-filter-produtos')" style="cursor: pointer; float: right;">&times;</span>
               <h1>Filtro Produtos</h1>
               <div>
                     <form id="filter-produtos">
@@ -205,7 +205,7 @@
               
               <br> 
               <br>
-              <button onclick="getProdutos();closeModal();">Filtrar</button>
+              <button onclick="getProdutos();closeModal('modal-filter-produtos');">Filtrar</button>
             </div>
           </div>
     </div>
@@ -226,4 +226,5 @@
 </body>
 </html>
 <script src="js/database.js"></script>
+<script src="js/main.js"></script>
 <script src="js/portal.js"></script>
