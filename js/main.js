@@ -67,6 +67,10 @@ function toggleMenu(pMenu,pElem){
         if(pMenu == "painel-produtos"){
             getProdutos();
         }
+        if(pMenu == "painel-clientes"){
+            getClientes();
+        }
+
     }
 
 }
@@ -81,6 +85,14 @@ function initWS(pURL,pMethod){
 
 function openModal(name) {
     document.getElementById(name).style.display = 'flex';
+
+    var inputs =  document.getElementById(name).getElementsByTagName('input');
+    for (var i = 0; i < inputs.length; i++) {
+        if (inputs[i].type === 'text' || inputs[i].type === 'number') {
+             inputs[i].focus();
+             break;
+        }
+    }
  }
 
 function closeModal(name) {
@@ -105,6 +117,36 @@ function showGrid(pElem){
 function painelClientes(pElem){
      document.getElementById("painel-clientes-pesquisar").style.display = "none";
      document.getElementById("painel-clientes-incluir").style.display = "none";
+     document.getElementById("painel-clientes-atualizar").style.display = "none";
 
      document.getElementById(pElem).style.display = "";
+}
+
+function formatarCNPJ(cnpj) {
+    var value; 
+    if(cnpj.value){
+        value = cnpj.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+    }else{
+        value = cnpj;
+    }
+    var formattedValue = '';
+
+    // Aplica a máscara de CNPJ
+    if (value.length <= 2) {
+        formattedValue = value;
+    } else if (value.length <= 5) {
+        formattedValue = value.substring(0, 2) + '.' + value.substring(2);
+    } else if (value.length <= 8) {
+        formattedValue = value.substring(0, 2) + '.' + value.substring(2, 5) + '.' + value.substring(5);
+    } else if (value.length <= 12) {
+        formattedValue = value.substring(0, 2) + '.' + value.substring(2, 5) + '.' + value.substring(5, 8) + '/' + value.substring(8);
+    } else {
+        formattedValue = value.substring(0, 2) + '.' + value.substring(2, 5) + '.' + value.substring(5, 8) + '/' + value.substring(8, 12) + '-' + value.substring(12, 14);
+    }
+
+    if(cnpj.value){
+         cnpj.value = formattedValue;
+    }else{
+        return formattedValue;
+    }
 }

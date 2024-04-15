@@ -116,52 +116,334 @@
             </div>
             <h3>Lista de Clientes</h3>
             <div class="painel">
-                <table >
+                <table class="tProdutos" id="table-clientes">
                     <thead>
                         <tr>
                             <th>#</th>
                             <th>Cód</th>
                             <th>Cliente</th>
                             <th>CNPJ</th>
-                            <th>Email</th>
-                            </tr>
+                            <th>Segmento</th>
+                            <th>Cadastro</th>
+                            <th></th>
+                        </tr>
                     </thead>
                     <tbody></tbody>
                 </table>
             </div>
+            <div id="modal-filter-clientes" class="modal" >
+                <div class="modal-content">
+                  <span onclick="closeModal('modal-filter-clientes')" style="cursor: pointer; float: right;">&times;</span>
+                  <h1>Filtro Clientes</h1>
+                  <div>
+                        <form id="filter-clientes">
+                            <table>
+                                <tr>
+                                    <td><h3>Código</h3></td>
+                                    <td><input type=number name="P_CD_PESSOA"></td>
+                                </tr>
+                                <tr>
+                                    <td><h3>Nome</h3></td>
+                                    <td><input type=text name="P_NM_RAZAO_SOCIAL"></td>
+                                </tr>
+                                <tr>
+                                    <td><h3>CNPJ</h3></td>
+                                    <td><input type=text name="P_DM_CNPJ_CPF"></td>
+                                </tr>
+                                <tr>
+                                    <td><h3>Segmento</h3></td>
+                                    <td>
+                                        <select name="P_CD_SEGMENTO_PESSOA"> 
+                                            <option></option>
+                                            <option value=1011>Atacado / Distribuidor para varejo</option>                         
+                                            <option value=1012>Atacado / Distribuidor para escolas / condomínios / parques</option>
+                                            <option value=1013>Atacado / Distribuidor para pessoa física (Crediarista)</option>    
+                                            <option value=1021>Varejo / Loja especializada em brinquedos</option>                  
+                                            <option value=1022>Varejo / Bazar de Utilidades, Presentes e Brinquedos</option>       
+                                            <option value=1023>Varejo / Papelaria</option>                                         
+                                            <option value=1024>Varejo / Supermercado / Hipermercado</option>                       
+                                            <option value=1025>Varejo / Hipermercado</option>                                      
+                                            <option value=1026>Varejo / Rede de Eletromóveis</option>                              
+                                            <option value=1027>Varejo / Loja de Departamento</option>                              
+                                            <option value=1028>Varejo / Loja de artigos esportivos</option>                        
+                                            <option value=1029>Varejo / E-COMMERCE (Exclusivo via site)</option>                   
+                                            <option value=1020>Varejo / outros (especificar)</option>                                
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><h3>Registros</h3></td>
+                                    <td>
+                                        <select name="P_NR_REGISTRO">
+                                            <option value=50>50</option>
+                                            <option value=100>100</option>
+                                            <option value=1000>1000</option>
+                                            <option value=100000>Todos</option>
+                                        </select>
+                                    </td>
+                                </tr>
+    
+                            </table>
+                       </form>
+                  </div>
+                    <br>
+                    <button onclick="getClientes();closeModal('modal-filter-clientes');">Filtrar</button>
+                    <br>
+                </div>
+            </div>
         </div>
-        <div id="painel-clientes-incluir" style="display:none">
+        <div id="painel-clientes-incluir" style="display: none;" >
              <h1>Clientes - Inclusão</h1>
              <br>
-
              <div class="painel form" style="background-color: white;" >
-                <table class="tClientes" >
-                    <thead>
-                    </thead>
-                    <tbody>
+                <form id="form-clientes">
+                    <div class="grid-row">
+                        <div class="grid-item" >
+                            <label >Razão Social</label>
+                            <input type="text" name="P_NM_RAZAO_SOCIAL">
+                        </div>
+                    
+                    </div>  
+                    <div class="grid-row">
+                        <div class="grid-item" >
+                            <label >CNPJ</label>
+                            <div><input type="text"  name="P_DM_CNPJ_CPF" autocomplete="off" onkeyup="formatarCNPJ(this)"></div>
+                        </div>
+                        <div class="grid-item">
+                            <label >Inscrição Estadual</label>
+                            <input type="text"  name="P_NR_INSCRICAO">
+                        </div>
+                    </div> 
+                    <div class="grid-row">
+                        <div class="grid-item" >
+                            <label >Segmento</label>
+                            <select name="P_CD_SEGMENTO_PESSOA"> 
+                                <option></option>
+                                <option value=1011>Atacado / Distribuidor para varejo</option>                         
+                                <option value=1012>Atacado / Distribuidor para escolas / condomínios / parques</option>
+                                <option value=1013>Atacado / Distribuidor para pessoa física (Crediarista)</option>    
+                                <option value=1021>Varejo / Loja especializada em brinquedos</option>                  
+                                <option value=1022>Varejo / Bazar de Utilidades, Presentes e Brinquedos</option>       
+                                <option value=1023>Varejo / Papelaria</option>                                         
+                                <option value=1024>Varejo / Supermercado / Hipermercado</option>                       
+                                <option value=1025>Varejo / Hipermercado</option>                                      
+                                <option value=1026>Varejo / Rede de Eletromóveis</option>                              
+                                <option value=1027>Varejo / Loja de Departamento</option>                              
+                                <option value=1028>Varejo / Loja de artigos esportivos</option>                        
+                                <option value=1029>Varejo / E-COMMERCE (Exclusivo via site)</option>                   
+                                <option value=1020>Varejo / outros (especificar)</option>                                
+                            </select>
                         
-                         <tr>
-                            <td>Razão Social</td>
-                            <td><input type="text" ></td>
-                        </tr>
-                         <tr>
-                            <td>CNPJ</td>
-                            <td><input type="text" ></td>
-                        </tr>
-                         <tr>
-                            <td>Inscrição Estadual</td>
-                            <td><input type="text"></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
+                        </div>
+                        <div class="grid-item">
+                            <label >Especificação</label>
+                            <input type="text"  name="P_TX_SEGMENTO_PESSOA">
+                        </div>
+                    </div> 
+                    <div class="grid-row">
+                        <div class="grid-item">
+                            <label >CEP</label>
+                            <div><input type="text"  name="P_DM_CEP"></div>
+                        </div>
+                        <div class="grid-item" >
+                            <label >Unidade Federativa</label>
+                            <div><input type="text"  name="P_CD_UF" maxlength="2" onchange="getCidades(this.value)" ></div>
+                        </div>
+                        <div class="grid-item" >
+                            <label >Cidade</label>
+                            <div>
+                                <select name="P_ID_CIDADE">
+                                    <option></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid-row">
+                        <div class="grid-item" >
+                            <label >Logradouro</label>
+                            <div><input type="text"  name="P_TX_LOGRADOURO"></div>
+                        </div>
+                        <div class="grid-item" >
+                            <label >Número</label>
+                            <div><input type="text"  name="P_TX_NUMERO"></div>
+                        </div>
+                        <div class="grid-item" >
+                            <label >Bairro</label>
+                            <div><input type="text"  name="P_NM_BAIRRO"></div>
+                        </div>
+                        <div class="grid-item" >
+                            <label >Complemento</label>
+                            <div><input type="text"  name="P_TX_COMPLEMENTO"></div>
+                        </div>
+                    </div>
+                    <div class="grid-row">
+                        <div class="grid-item" >
+                            <label >Telefone/Celular</label>
+                            <div><input type="text"  name="P_TX_TELEFONE"></div>
+                        </div>
+                        <div class="grid-item" >
+                            <label >Telefone/Celular(2)</label>
+                            <div><input type="text"  name="P_TX_TELEFONE_II"></div>
+                        </div>
+                        <div class="grid-item" >
+                            <label >Telefone/Celular(3)</label>
+                            <div><input type="text"  name="P_TX_TELEFONE_III"></div>
+                        </div>
+                    </div>
+                    <div class="grid-row">
+                        <div class="grid-item" >
+                            <label >Email</label>
+                            <div><input type="email"  name="P_TX_EMAIL"></div>
+                        </div>
+                        <div class="grid-item" >
+                            <label >Email XML / NFe</label>
+                            <div><input type="email"  name="P_TX_EMAIL_NOTA"></div>
+                        </div>
+                        <div class="grid-item" >
+                            <label >Email Financeiro</label>
+                            <div><input type="email"  name="P_TX_EMAIL_FIN"></div>
+                        </div>
+                    </div>
+                    <div class="grid-row">
+                        <div class="grid-item" >
+                            <label >Observações</label>
+                            <div><textarea name="P_TX_OBSERVACOES"></textarea></div>
+                        </div>
+                        <!-- <div class="grid-item" >
+                            <label >Observações Financeira</label>
+                            <div><textarea  name="P_TX_PARECER"></textarea></div>
+                        </div> -->
+                    </div>
+                </form>
+
             </div>
+            
             <br>
              <button class="button-small" onclick="painelClientes('painel-clientes-pesquisar')">Cancelar</button>
              <button class="button-small button-secondary" >Salvar</button>
         </div>
+        <div id="painel-clientes-atualizar" style="display:none">
+            <h1>Clientes - Alteração</h1>
+            <br>
+            <div class="painel form" style="background-color: white;" >
+               <form id="form-clientes-update">
+                   <div class="grid-row">
+                       <div class="grid-item" >
+                           <label >Código</label>
+                           <input type="text" name="P_CD_PESSOA" readonly >
+                       </div>
+                       <div class="grid-item" >
+                           <label >Razão Social</label>
+                           <input type="text" name="P_NM_RAZAO_SOCIAL" readonly value="XALINGO INDUSTRIAL E COMERCIO">
+                       </div>
+                   
+                   </div>  
+                   <div class="grid-row">
+                       <div class="grid-item" >
+                           <label >CNPJ</label>
+                           <div><input type="text"  name="P_DM_CNPJ_CPF" autocomplete="off" onload="formatarCNPJ(this)" readonly></div>
+                       </div>
+                       <div class="grid-item">
+                           <label >Inscrição Estadual</label>
+                           <input type="text"  name="P_NR_INSCRICAO" readonly>
+                       </div>
+                   </div> 
+                   <div class="grid-row">
+                       <div class="grid-item" >
+                           <label >Segmento</label>
+                           <select name="P_CD_SEGMENTO_PESSOA"> 
+                               <option></option>
+                               <option value=1011>Atacado / Distribuidor para varejo</option>                         
+                               <option value=1012>Atacado / Distribuidor para escolas / condomínios / parques</option>
+                               <option value=1013>Atacado / Distribuidor para pessoa física (Crediarista)</option>    
+                               <option value=1021>Varejo / Loja especializada em brinquedos</option>                  
+                               <option value=1022>Varejo / Bazar de Utilidades, Presentes e Brinquedos</option>       
+                               <option value=1023>Varejo / Papelaria</option>                                         
+                               <option value=1024>Varejo / Supermercado / Hipermercado</option>                       
+                               <option value=1025>Varejo / Hipermercado</option>                                      
+                               <option value=1026>Varejo / Rede de Eletromóveis</option>                              
+                               <option value=1027>Varejo / Loja de Departamento</option>                              
+                               <option value=1028>Varejo / Loja de artigos esportivos</option>                        
+                               <option value=1029>Varejo / E-COMMERCE (Exclusivo via site)</option>                   
+                               <option value=1020>Varejo / outros (especificar)</option>                                
+                           </select>
+                       
+                       </div>
+                       <div class="grid-item">
+                           <label >Especificação</label>
+                           <input type="text"  name="P_TX_SEGMENTO_PESSOA">
+                       </div>
+                   </div> 
+                   <div class="grid-row">
+                       <div class="grid-item">
+                           <label >CEP</label>
+                           <div><input type="text"  name="P_DM_CEP"></div>
+                       </div>
+                       <div class="grid-item" >
+                           <label >Data Cadastro</label>
+                           <div><input type="text"  name="P_DT_CADASTRO" readonly></div>
+                       </div>
+                       <div class="grid-item" >
+                           <label >Cidade</label>
+                           <div><input type="text"  name="P_NM_CIDADE" readonly></div>
+                       </div>
+                   </div>
+                   <div class="grid-row">
+                       <div class="grid-item" >
+                           <label >Endereço</label>
+                           <div><input type="text"  name="P_NM_ENDERECO" readonly></div>
+                       </div>
+                       <div class="grid-item" >
+                           <label >Complemento</label>
+                           <div><input type="text"  name="P_TX_COMPLEMENTO" readonly></div>
+                       </div>
+                   </div>
+                   <div class="grid-row">
+                       <div class="grid-item" >
+                           <label >Telefone/Celular</label>
+                           <div><input type="text"  name="P_TX_TELEFONE"></div>
+                       </div>
+                       <div class="grid-item" >
+                           <label >Telefone/Celular(2)</label>
+                           <div><input type="text"  name="P_TX_TELEFONE_II"></div>
+                       </div>
+                       <div class="grid-item" >
+                           <label >Telefone/Celular(3)</label>
+                           <div><input type="text"  name="P_TX_TELEFONE_III"></div>
+                       </div>
+                   </div>
+                   <div class="grid-row">
+                       <div class="grid-item" >
+                           <label >Email</label>
+                           <div><input type="email"  name="P_TX_EMAIL"></div>
+                       </div>
+                       <div class="grid-item" >
+                           <label >Email XML / NFe</label>
+                           <div><input type="email"  name="P_TX_EMAIL_NOTA"></div>
+                       </div>
+                       <div class="grid-item" >
+                           <label >Email Financeiro</label>
+                           <div><input type="email"  name="P_TX_EMAIL_FIN"></div>
+                       </div>
+                   </div>
+                   <div class="grid-row">
+                       <div class="grid-item" >
+                           <label >Observações</label>
+                           <div><textarea name="P_TX_OBSERVACOES" readonly></textarea></div>
+                       </div>
+                       <!-- <div class="grid-item" >
+                           <label >Observações Financeira</label>
+                           <div><textarea  name="P_TX_PARECER"></textarea></div>
+                       </div> -->
+                   </div>
+               </form>
+
+           </div>
+           
+           <br>
+            <button class="button-small" onclick="painelClientes('painel-clientes-pesquisar')">Cancelar</button>
+            <button class="button-small button-secondary" >Salvar</button>
+       </div>
     </div>
     <!-- painel produtos-->
     <div class="main" id="painel-produtos" >

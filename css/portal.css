@@ -90,30 +90,65 @@ select {
     background:white;
     border:1px solid lightgray;
     border-radius:5px;
-}
-
-.form td{
-    /* bordeR:1px solid; */
-    height:20px;
-}
-
-.form tr{
-    height:40px;
-    align-items: center;
-    vertical-align: center;
-    justify-content: center;
-}
-.form table td:first-child{
-    padding-top:15px;
-    text-align: right;
-    width:30%;
-
+    max-width: 1200px;
 }
 
 .form input{
-    
+    margin-top:5px;
     padding:0;
+    width: initial;
+    width: 100%;
+    text-transform: uppercase;
+    /* max-width: 500px; */
 }
+
+.form input:read-only {
+    background-color: white;
+    color: #888; 
+    border: 1px solid #ccc; 
+    border:0;
+}
+
+.form select {
+    width:100%;
+    height:35px;
+}
+
+.form textarea{
+    border:1px solid #00b0e6;
+    width:100%;
+    height:150px
+}
+
+.grid-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    /* grid-gap: 30px; */
+    
+}
+
+.grid-item {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px;
+    padding-left:30px;
+    padding-right:30px;
+    border-radius: 5px;
+}
+
+
+.grid-item label {
+    margin-bottom: 5px;
+    font-size:12px;
+}
+
+@media (max-width: 600px) {
+    .grid-item {
+        display: block;
+    }
+}
+
 
 .container{
     width: 100%;
@@ -135,7 +170,7 @@ select {
 .card{
     background-color: white;
     height:60px;
-    width:90%;
+    width:81%;
     margin-right:5%;
     border:1px solid #e3e5e7;
     border-radius: 5px;
@@ -247,6 +282,11 @@ select {
 
     .form{
         border:0;
+    }
+
+    .form input{
+        margin-top:20px;
+        padding:7px;
     }
 }
 
@@ -565,7 +605,7 @@ width:100%;
     background-color: #fff;
     width:50%;
     max-width:500px;
-    max-height: 420px;
+    max-height: 430px;
     height:70%;
     padding: 20px;
     border-radius: 5px;

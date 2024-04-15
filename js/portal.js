@@ -86,8 +86,8 @@ function getProdutos(){
         printTableProdutos();
         checkConnection();
     }
-
 } 
+
 
 function printTableProdutos(){
     if(document.getElementById("show-grid-produtos").className == "fas fa-table"){
@@ -181,6 +181,145 @@ function syncProdutos(pElem){
     ws.send();
 
 }
+
+function getClientes(){
+    checkConnection();
+    
+    let filter = document.getElementById("filter-clientes");
+    let iName = document.getElementById("input-filter-clientes");
+    if(iName.value.trim() != ""){
+        filter.P_NM_RAZAO_SOCIAL.value = iName.value ;
+        iName.value = "";
+    }
+
+    let request = {
+        token : token,
+        cd_pessoa : filter.P_CD_PESSOA.value,
+        nm_razao_social : filter.P_NM_RAZAO_SOCIAL.value,
+        dm_cnpj_cpf : filter.P_DM_CNPJ_CPF.value,
+        cd_segmento_pessoa : filter.P_CD_SEGMENTO_PESSOA.value,
+        rows : parseInt(filter.P_NR_REGISTRO.value)
+    }
+
+    if(navigator.onLine){
+        ws = new XMLHttpRequest();
+        ws.open("POST",url + "clientes",true);
+    
+        ws.onreadystatechange = function(){
+            if ( ws.readyState == 4 && ws.status == 200 ) {
+                printTableClientes(JSON.parse(ws.responseText));
+            }
+        }
+        ws.send("P_JSON=" + JSON.stringify(request));
+    }else{
+        
+    }
+}
+
+function getCliente(P_CD_PESSOA){
+    let request = {
+        token : token,
+        cd_pessoa : P_CD_PESSOA
+    }
+
+    if(navigator.onLine){
+        
+        ws = new XMLHttpRequest();
+        ws.open("POST",url + "cliente",true);
+        ws.onreadystatechange = function(){
+            if ( ws.readyState == 4 && ws.status == 200 ) {
+                form = document.getElementById("form-clientes-update");
+                jCliente = JSON.parse(ws.responseText);
+                form.P_CD_PESSOA.value = jCliente.cd_pessoa;
+                form.P_NM_RAZAO_SOCIAL.value = jCliente.nm_razao_social;
+                form.P_DM_CNPJ_CPF.value = formatarCNPJ(jCliente.dm_cnpj_cpf);
+                form.P_NR_INSCRICAO.value = jCliente.nr_inscricao;
+                let options = form.P_CD_SEGMENTO_PESSOA.options;
+                
+                for (var i = 0; i < options.length; i++) {
+                    if (options[i].value.toString().trim() === jCliente.cd_segmento_pessoa.toString().trim()) {
+                        options[i].selected = true;
+                        break; 
+                    }
+                }
+                form.P_TX_SEGMENTO_PESSOA.value = jCliente.tx_segmento_pessoa;
+                form.P_DM_CEP.value = jCliente.dm_cep;
+                form.P_DT_CADASTRO.value = jCliente.dt_cadastro;
+                form.P_NM_CIDADE.value = jCliente.nm_cidade;
+                form.P_NM_ENDERECO.value = jCliente.nm_endereco;
+                form.P_TX_OBSERVACOES.value = jCliente.tx_observacoes;
+                console.log(ws.responseText);
+
+                painelClientes('painel-clientes-atualizar');
+            }
+        }
+        ws.send("P_JSON=" + JSON.stringify(request));
+    }else{
+        alert("Sem conexão com Internet");
+    }
+
+}
+
+function printTableClientes(jClientes){
+    let filter = document.getElementById("filter-clientes");
+    table = document.getElementById("table-clientes").children[1];
+    table.innerHTML = "";
+       
+    let rows = 0;
+    for(let a in jClientes){
+
+        if((filter.P_CD_PESSOA.value == jClientes[a].cd_pessoa || filter.P_CD_PESSOA.value == "" ) &&
+          (filter.P_DM_CNPJ_CPF.value.replace(/\D/g, '') == jClientes[a].dm_cnpj_cpf.replace(/\D/g, '') || filter.P_DM_CNPJ_CPF.value == 0 ) &&
+          (filter.P_CD_SEGMENTO_PESSOA.value == jClientes[a].cd_segmento_pessoa || filter.P_CD_SEGMENTO_PESSOA.value == "" ) &&
+          (jClientes[a].nm_razao_social.indexOf(filter.P_NM_RAZAO_SOCIAL.value.toUpperCase()) != -1 || filter.P_NM_RAZAO_SOCIAL.value == jClientes[a].cd_pessoa ||filter.P_NM_RAZAO_SOCIAL.value == "" )
+        ){
+            
+            table.innerHTML+="<tr>" + 
+            "<td> " + (++rows) + "</td>" + 
+            "<td> " + jClientes[a].cd_pessoa + "</td>" + 
+            "<td> " + jClientes[a].nm_razao_social + "</td>" + 
+            "<td> " + formatarCNPJ(jClientes[a].dm_cnpj_cpf) + "</td>" + 
+            "<td> " + jClientes[a].nm_segmento_pessoa + "</td>" + 
+            "<td> " + jClientes[a].dt_cadastro + "</td>" + 
+            "<td onclick=\"getCliente(" + jClientes[a].cd_pessoa + ")\"><i class='fas fa-edit'></i></td>" + 
+            "</tr>" ;
+        }
+
+        if(rows >= filter.P_NR_REGISTRO.value){
+            break;
+        }
+
+    }
+
+    filter.P_NM_RAZAO_SOCIAL.value = "";
+    filter.P_CD_PESSOA.value = "";
+}
+
+
+
+
+function getCidades(pUF){
+    checkConnection();
+
+    if(navigator.onLine){
+        form = document.getElementById("form-clientes");
+        ws = new XMLHttpRequest();
+        ws.open("GET",url + "cidades?P_CD_UF=" + pUF.toUpperCase(),true);
+    
+        ws.onreadystatechange = function(){
+            if ( ws.readyState == 4 && ws.status == 200 ) {
+                jCidades = JSON.parse(ws.responseText);
+                form.P_ID_CIDADE.innerHTML="";
+                for(let a in jCidades){
+                    form.P_ID_CIDADE.innerHTML+="<option value=" + jCidades[a].id_cidade + ">" + jCidades[a].nm_cidade + "</option>";
+                }
+            }
+        }
+        ws.send();
+    }else{
+        alert("Cadastro Clientes, necessário conexão com internet!");
+    }
+} 
 
 init();
 
