@@ -51,6 +51,7 @@ table{
 th, td{
      padding-right:15px; 
      padding-left:15px; 
+     
 }
 
 tbody tr:nth-child(even) {
@@ -66,7 +67,7 @@ tbody td{
 thead{
     background-color: white;
     height:38px;
-    font-size:15px;
+    font-size:14px;
     border-top:2px solid var(--primary)
 }
 
@@ -102,7 +103,7 @@ select {
     /* max-width: 500px; */
 }
 
-.form input:read-only {
+.form input:read-only, .form textarea:read-only {
     background-color: white;
     color: #888; 
     border: 1px solid #ccc; 
@@ -117,7 +118,12 @@ select {
 .form textarea{
     border:1px solid #00b0e6;
     width:100%;
-    height:150px
+    height:50px
+}
+
+.form-lov:first-child input{
+    width:50px;
+    background-color: red;;
 }
 
 .grid-row {
@@ -288,6 +294,22 @@ select {
         margin-top:20px;
         padding:7px;
     }
+
+    .form input:read-only {
+        margin-left:-6px;
+        font-size:14px;
+    }
+
+    .form select {
+        width:103%;
+        height:45px;
+    }
+
+    .form label{
+        font-size:15px;
+    }
+
+    
 }
 
 @media screen and (min-width: 600px) { /* web */
@@ -623,5 +645,50 @@ width:100%;
     }
 
 }
+
+.alert{
+    
+    width:1200px;
+    margin-left:105px;
+    height:50px;
+    justify-content: center;
+    align-items: center;
+    font-size:16px;
+    border-radius:5px;
+    margin-top:10px;
+    display:none;
+}
+
+.alert span{
+    font-weight: bold;
+    margin-right:10px
+}
+
+.alert label{
+    position: absolute;
+    font-size:19px;
+    cursor:pointer;
+    margin-right:200px;
+}
+
+.alert-success{
+    border:1px solid #b8daff;
+    color:#004085;
+    background-color: #cce5ff;;
+}
+
+.alert-error{
+    color: #721c24;
+    background-color: #f8d7da;
+    border:1px solid #f5c6cb;
+}
+
+.alert-warning{
+    color: #383d41;
+    background-color: #e2e3e5;
+    border: 1px solid #d6d8db;
+}
+  
+  
 
 

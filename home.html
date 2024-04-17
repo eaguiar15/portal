@@ -38,12 +38,12 @@
                 </button>
             </li>
             <li>
-                <button>
+                <button class="active" onclick="toggleMenu('painel-pedidos',this)">
                     <i class="fas fa-wallet"></i><span>Pedidos</span>
                 </button>
             </li>
             <li>
-                <button class="active" onclick="toggleMenu('painel-clientes',this)">
+                <button  onclick="toggleMenu('painel-clientes',this)">
                     <i class="fas fa-user-tie"></i><span>Clientes</span>
                 </button>
             </li>
@@ -74,13 +74,13 @@
                 </button>
             </li>
             <li>
-                <button>
+                <button class="active" onclick="toggleMenu('painel-pedidos',this)">
                     <i class="fas fa-wallet"></i>
                     <div>Pedidos</div>
                 </button>
             </li>
             <li>
-                <button class="active" onclick="toggleMenu('painel-clientes',this)">
+                <button  onclick="toggleMenu('painel-clientes',this)">
                     <i class="fas fa-user-tie"></i>
                     <div>Clientes</div>
                 </button>
@@ -104,15 +104,221 @@
             
         </ul>
     </div>
-    <!-- painel clientes -->
-    <div class="main show" id="painel-clientes">
+    <div class="alert" id="alert-message">
+        <span>Confirmação - </span> Alterações foram realizadas com sucesso.
+    </div>
+    <!-- painel pedidos-->
+    <div class="main show" id="painel-pedidos">
+        
+        <div id="painel-pedidos-pesquisar" style="display:none">
+            <h1>Pedidos</h1>
+            <div class="card">
+                <input type="text" class="input-small" id="input-filter-pedidos" onkeydown="if (event.key === 'Enter') pedidosList()">
+                <button class="button-small-icon" onclick="openModal('modal-filter-pedidos')" title="Filtrar"><i class="fas fa-filter "></i></button>
+                <button class="button-small" onclick="pedidosList()">Pesquisar</button>
+                <button class="button-small button-secondary" onclick="showPainel('painel-pedidos-incluir')">Incluir</button>
+            </div>
+            <h3>Lista de Pedidos</h3>
+            <div class="painel">
+                <table class="tProdutos" id="table-pedidos">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Pedido</th>
+                            <th>Cód</th>
+                            <th>Cliente</th>
+                            <th>Emissão</th>
+                            <th>Valor</th>
+                            <th>Situação</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div id="modal-filter-pedidos" class="modal" >
+                <div class="modal-content">
+                  <span onclick="closeModal('modal-filter-pedidos')" style="cursor: pointer; float: right;">&times;</span>
+                  <h1>Filtro Pedidos</h1>
+                  <div>
+                        <form id="filter-pedidos">
+                            <table>
+                                <tr>
+                                    <td><h3>Nr Pedido</h3></td>
+                                    <td><input type=number name="P_NR_PEDIDO" placeholder="Informe o número do pedido"></td>
+                                </tr>
+                                <tr>
+                                    <td><h3>Cliente</h3></td>
+                                    <td><input type=text name="P_SEARCH" placeholder="Informe código ou razão social"></td>
+                                </tr>
+                                <tr>
+                                    <td><h3>CNPJ</h3></td>
+                                    <td><input type=text name="P_DM_CNPJ_CPF"></td>
+                                </tr>
+                                <tr>
+                                    <td><h3>Segmento</h3></td>
+                                    <td>
+                                        <select name="P_CD_SEGMENTO_PESSOA"> 
+                                            <option></option>
+                                            <option value=1011>Atacado / Distribuidor para varejo</option>                         
+                                            <option value=1012>Atacado / Distribuidor para escolas / condomínios / parques</option>
+                                            <option value=1013>Atacado / Distribuidor para pessoa física (Crediarista)</option>    
+                                            <option value=1021>Varejo / Loja especializada em brinquedos</option>                  
+                                            <option value=1022>Varejo / Bazar de Utilidades, Presentes e Brinquedos</option>       
+                                            <option value=1023>Varejo / Papelaria</option>                                         
+                                            <option value=1024>Varejo / Supermercado / Hipermercado</option>                       
+                                            <option value=1025>Varejo / Hipermercado</option>                                      
+                                            <option value=1026>Varejo / Rede de Eletromóveis</option>                              
+                                            <option value=1027>Varejo / Loja de Departamento</option>                              
+                                            <option value=1028>Varejo / Loja de artigos esportivos</option>                        
+                                            <option value=1029>Varejo / E-COMMERCE (Exclusivo via site)</option>                   
+                                            <option value=1020>Varejo / outros (especificar)</option>                                
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><h3>Registros</h3></td>
+                                    <td>
+                                        <select name="P_NR_REGISTRO">
+                                            <option value=20>20</option>
+                                            <option value=50>50</option>
+                                            <option value=100>100</option>
+                                            <option value=1000>1000</option>
+                                            <option value=100000>Todos</option>
+                                        </select>
+                                    </td>
+                                </tr>
+    
+                            </table>
+                       </form>
+                  </div>
+                    <br>
+                    <button onclick="pedidosList();closeModal('modal-filter-pedidos');">Filtrar</button>
+                    <br>
+                </div>
+            </div>
+        </div>
+        <div id="painel-pedidos-incluir"  >
+             <h1>Pedidos - Inclusão</h1>
+             <br>
+             <div class="painel form" style="background-color: white;" >
+                <form id="form-pedidos">
+                    <div class="grid-row">
+                        <div class="grid-item" >
+                            <label >Nr Pedido</label>
+                            <input type="text" name="P_NR_PEDIDO" readonly>
+                        </div>
+                        <div class="grid-item" >
+                            <label >Emissão</label>
+                            <input type="date" name="P_DT_EMISSAO" readonly value="2024-04-17">
+                        </div>
+                        <div class="grid-item" >
+                            <label >Tipo Pedido</label>
+                            <select name="P_ID_TIPO_PEDIDO">
+                                <option value="3">Venda Representante </option>
+                                <option value="16">Amostra</option>
+                                <option value="17">Bonificação </option>
+                            </select>
+                        </div>
+                    
+                    </div>  
+                    <div class="grid-row">
+                        <div class="grid-item" >
+                            <label >Cliente</label>
+                            <div class="form-lov">
+                                <input type="text"  name="P_CD_PESSOA" autocomplete="off">
+                                <button><i class="fas fa-search"></i></button>
+                                <input type="text"  name="P_DM_CNPJ_CPF" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="grid-item">
+                            <label >Frete</label>
+                            <select name="P_ID_FRETE">
+                                <option></option></option>
+                            </select>
+                        </div>
+                    </div> 
+                    <div class="grid-row">
+                        <h3 style="text-align: center;">Redespacho</h1>
+                    </div>
+                    <div class="grid-row">
+                        <div class="grid-item" >
+                            <label >CNPJ Redespacho</label>
+                            <div class="form-lov">
+                                <input type="text"  name="P_CD_PESSOA" autocomplete="off" >
+                                <button><i class="fas fa-search"></i></button>
+                                <input type="text"  name="P_DM_CNPJ_CPF" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="grid-item" >
+                            <label >Telefone</label>
+                            <div>
+                                <input type="text"  name="P_CD_PESSOA" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="grid-item" >
+                            <label >Cidade</label>
+                            <div>
+                                <select name="P_ID_FRETE">
+                                    <option></option></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid-row">
+                        <div class="grid-item" >
+                            <label >Ordem de Compra</label>
+                            <div>
+                                <input type="text"  name="P_CD_PESSOA" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="grid-item" >
+                            <label >Data despacho</label>
+                            <div>
+                                <input type="date"  name="P_CD_PESSOA" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="grid-item" >
+                            <label >Agrupar duplicata</label>
+                            <div>
+                                <select>
+                                    <option></option>
+                                    <option>Sim</option>
+                                    <option>Não</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="grid-item" >
+                            <label >Somente Completo</label>
+                            <div>
+                                <select>
+                                    <option></option>
+                                    <option>Sim</option>
+                                    <option>Não</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </form>
+
+            </div>
+            
+            <br>
+             <button class="button-small" onclick="showPainel('painel-pedidos-pesquisar')">Retornar</button>
+             <button class="button-small button-secondary" onclick="pedidoInsert()" >Salvar</button>
+        </div>
+        
+    </div>
+    <!-- painel clientes --> 
+    <div class="main" id="painel-clientes">
+        
         <div id="painel-clientes-pesquisar" >
             <h1>Clientes</h1>
             <div class="card">
-                <input type="text" class="input-small" id="input-filter-clientes" onkeydown="if (event.key === 'Enter') getClientes()">
+                <input type="text" class="input-small" id="input-filter-clientes" onkeydown="if (event.key === 'Enter') clientesList()">
                 <button class="button-small-icon" onclick="openModal('modal-filter-clientes')" title="Filtrar"><i class="fas fa-filter "></i></button>
-                <button class="button-small" onclick="getClientes()">Pesquisar</button>
-                <button class="button-small button-secondary" onclick="painelClientes('painel-clientes-incluir')">Incluir</button>
+                <button class="button-small" onclick="clientesList()">Pesquisar</button>
+                <button class="button-small button-secondary" onclick="showPainel('painel-clientes-incluir')">Incluir</button>
             </div>
             <h3>Lista de Clientes</h3>
             <div class="painel">
@@ -187,12 +393,12 @@
                        </form>
                   </div>
                     <br>
-                    <button onclick="getClientes();closeModal('modal-filter-clientes');">Filtrar</button>
+                    <button onclick="clientesList();closeModal('modal-filter-clientes');">Filtrar</button>
                     <br>
                 </div>
             </div>
         </div>
-        <div id="painel-clientes-incluir" style="display: none;" >
+        <div id="painel-clientes-incluir"  style="display:none">
              <h1>Clientes - Inclusão</h1>
              <br>
              <div class="painel form" style="background-color: white;" >
@@ -319,8 +525,8 @@
             </div>
             
             <br>
-             <button class="button-small" onclick="painelClientes('painel-clientes-pesquisar')">Cancelar</button>
-             <button class="button-small button-secondary" >Salvar</button>
+             <button class="button-small" onclick="showPainel('painel-clientes-pesquisar')">Retornar</button>
+             <button class="button-small button-secondary" onclick="clienteInsert()" >Salvar</button>
         </div>
         <div id="painel-clientes-atualizar" style="display:none">
             <h1>Clientes - Alteração</h1>
@@ -415,15 +621,15 @@
                    <div class="grid-row">
                        <div class="grid-item" >
                            <label >Email</label>
-                           <div><input type="email"  name="P_TX_EMAIL"></div>
+                           <div><input type="email"  name="P_TX_EMAIL" style="text-transform: lowercase;"></div>
                        </div>
                        <div class="grid-item" >
                            <label >Email XML / NFe</label>
-                           <div><input type="email"  name="P_TX_EMAIL_NOTA"></div>
+                           <div><input type="email"  name="P_TX_EMAIL_NOTA" style="text-transform: lowercase;"></div>
                        </div>
                        <div class="grid-item" >
                            <label >Email Financeiro</label>
-                           <div><input type="email"  name="P_TX_EMAIL_FIN"></div>
+                           <div><input type="email"  name="P_TX_EMAIL_FIN" style="text-transform: lowercase;"></div>
                        </div>
                    </div>
                    <div class="grid-row">
@@ -441,17 +647,17 @@
            </div>
            
            <br>
-            <button class="button-small" onclick="painelClientes('painel-clientes-pesquisar')">Cancelar</button>
-            <button class="button-small button-secondary" >Salvar</button>
+            <button class="button-small" onclick="showPainel('painel-clientes-pesquisar')">Retornar</button>
+            <button class="button-small button-secondary" onclick="clienteUpdate()">Salvar</button>
        </div>
     </div>
     <!-- painel produtos-->
     <div class="main" id="painel-produtos" >
        <h1>Produtos</h1>
        <div class="card">
-            <input type="text" class="input-small" id="input-filter-produtos" onkeydown="if (event.key === 'Enter') getProdutos()">
+            <input type="text" class="input-small" id="input-filter-produtos" onkeydown="if (event.key === 'Enter') produtosList()">
             <button class="button-small-icon" onclick="openModal('modal-filter-produtos')" title="Filtrar"><i class="fas fa-filter "></i></button>
-            <button class="button-small" onclick="getProdutos()">Pesquisar</button>
+            <button class="button-small" onclick="produtosList()">Pesquisar</button>
        </div>
         <h3 >Lista de Produtos    <i class="fas fa-th " onclick="showGrid(this)" id="show-grid-produtos"></i> </h3>
        <div class="painel">
@@ -545,7 +751,7 @@
               
               <br> 
               <br>
-              <button onclick="getProdutos();closeModal('modal-filter-produtos');">Filtrar</button>
+              <button onclick="produtosList();closeModal('modal-filter-produtos');">Filtrar</button>
             </div>
           </div>
     </div>

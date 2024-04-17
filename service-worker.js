@@ -1,11 +1,14 @@
-const CACHE_NAME = 'app-v1';
+const CACHE_NAME = 'app-v2';
 const urlsToCache = [
   '',
   'index.html',
   'home.html',
   'manifest.json',
   'icon.png',
-  'css/portal.css'
+  'css/portal.css',
+  'js/main.js',
+  'js/database.js',
+  'js/portal.js'
 ];
 
 self.addEventListener('install', event => {

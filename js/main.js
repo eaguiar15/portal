@@ -1,10 +1,16 @@
-/*if ('serviceWorker' in navigator) {
+function isMobileDevice() {
+    return /Mobi|Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+}
+
+if ('serviceWorker' in navigator &&  isMobileDevice()) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('service-worker.js')
-        .then(registration => console.log('Service Worker registrado com sucesso:', registration))
+        .then(registration => 
+            console.log('Service Worker registrado com sucesso:', registration)
+        )
         .catch(error => console.log('Erro ao registrar o Service Worker:', error));
     });
-}*/
+}
 
 function checkConnection() {
     var statusOnline = document.getElementById('status-online');
@@ -39,6 +45,7 @@ function toggleMenu(pMenu,pElem){
 
     if( typeof pMenu !== "undefined" ){
 
+        document.getElementById("painel-pedidos").classList.remove("show");
         document.getElementById("painel-clientes").classList.remove("show");
         document.getElementById("painel-produtos").classList.remove("show");
         document.getElementById("painel-sync").classList.remove("show");
@@ -65,14 +72,29 @@ function toggleMenu(pMenu,pElem){
         rightbar.classList.remove("menu-active");
 
         if(pMenu == "painel-produtos"){
-            getProdutos();
+            produtosList();
         }
         if(pMenu == "painel-clientes"){
-            getClientes();
+            clientesList();
+            showPainel("painel-clientes-pesquisar");
+        }
+        if(pMenu == "painel-pedidos"){
+            pedidosList();
+            showPainel("painel-pedidos-pesquisar");
         }
 
     }
 
+}
+
+function showPainel(pElem){
+    document.getElementById("painel-clientes-pesquisar").style.display = "none";
+    document.getElementById("painel-clientes-incluir").style.display = "none";
+    document.getElementById("painel-clientes-atualizar").style.display = "none";
+    document.getElementById("painel-pedidos-pesquisar").style.display = "none";
+    document.getElementById("painel-pedidos-incluir").style.display = "none";
+
+    document.getElementById(pElem).style.display = "";
 }
 
 var ws;
@@ -114,21 +136,10 @@ function showGrid(pElem){
     }
 }
 
-function painelClientes(pElem){
-     document.getElementById("painel-clientes-pesquisar").style.display = "none";
-     document.getElementById("painel-clientes-incluir").style.display = "none";
-     document.getElementById("painel-clientes-atualizar").style.display = "none";
-
-     document.getElementById(pElem).style.display = "";
-}
 
 function formatarCNPJ(cnpj) {
-    var value; 
-    if(cnpj.value){
-        value = cnpj.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
-    }else{
-        value = cnpj;
-    }
+   
+    value = cnpj;
     var formattedValue = '';
 
     // Aplica a máscara de CNPJ
@@ -150,3 +161,25 @@ function formatarCNPJ(cnpj) {
         return formattedValue;
     }
 }
+
+function showMessage(pMessage,pStatus){
+    elem = document.getElementById("alert-message");
+    elem.style.display = "flex";
+    if(pStatus == 0){
+        elem.className = "alert alert-error";
+        elem.innerHTML="<span>Erro - </span>" + pMessage;
+    }
+    if(pStatus == 1){
+        elem.className = "alert alert-success";
+        elem.innerHTML="<span>Confirmação - </span>" + pMessage;
+    }
+    if(pStatus == 2){
+        elem.className = "alert alert-warning";
+        elem.innerHTML="<span>Alerta - </span>" + pMessage;
+    }
+
+    setTimeout(function() {
+        elem.style.display = "none";
+    }, 10000);
+}
+  
