@@ -182,4 +182,24 @@ function showMessage(pMessage,pStatus){
         elem.style.display = "none";
     }, 10000);
 }
+
+var divs = document.querySelectorAll('div.tab');
+
+// Itera sobre as divs encontradas
+divs.forEach(function(div) {
+    items = div.parentNode.querySelectorAll('div.tab-item');
+
+    for(let a = 0 ; a < div.children.length ; a++){
+        div.children[a].addEventListener('click', function() {
+            for (let b = 0; b < div.children.length; b++) {
+                div.children[b].classList.remove('tab-active');
+            }
+            this.classList.add('tab-active');
+            for(let b = 0 ; b < items.length ; b ++){
+                items[b].style.display = "none";
+            }
+            items[a].style.display = "";
+        });
+    }
+});
   

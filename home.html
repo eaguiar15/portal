@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/portal.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="icon" href="icon.png">
     <title>Portal - Xalingo</title>
 </head>
@@ -199,6 +200,11 @@
         </div>
         <div id="painel-pedidos-incluir"  >
              <h1>Pedidos - Inclusão</h1>
+             <div class="tab">
+                    <div class="tab-active">PEDIDO</div>
+                    <div>REDESPACHO</div>
+                    <div>PRAZOS</div>
+             </div>
              <br>
              <div class="painel form" style="background-color: white;" >
                 <form id="form-pedidos">
@@ -238,6 +244,41 @@
                         </div>
                     </div> 
                     <div class="grid-row">
+                        <div class="grid-item" >
+                            <label >Ordem de Compra</label>
+                            <div>
+                                <input type="text"  name="P_CD_PESSOA" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="grid-item" >
+                            <label >Agrupar duplicata</label>
+                            <div>
+                                <select>
+                                    <option></option>
+                                    <option>Sim</option>
+                                    <option>Não</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="grid-item" >
+                            <label >Somente Completo</label>
+                            <div>
+                                <select>
+                                    <option></option>
+                                    <option>Sim</option>
+                                    <option>Não</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="grid-row">
+                        <div class="grid-item" >
+                            <label >Observações</label>
+                            <div><textarea></textarea></div>
+                        </div>
+                    </div>
+                    <div class="grid-row">
                         <h3 style="text-align: center;">Redespacho</h1>
                     </div>
                     <div class="grid-row">
@@ -265,20 +306,20 @@
                         </div>
                     </div>
                     <div class="grid-row">
-                        <div class="grid-item" >
-                            <label >Ordem de Compra</label>
-                            <div>
-                                <input type="text"  name="P_CD_PESSOA" autocomplete="off">
-                            </div>
-                        </div>
+                        
                         <div class="grid-item" >
                             <label >Data despacho</label>
                             <div>
                                 <input type="date"  name="P_CD_PESSOA" autocomplete="off">
                             </div>
                         </div>
+                    </div>
+                    <div class="grid-row">
+                        <h3 style="text-align: center;">Prazos</h1>
+                    </div>
+                    <div class="grid-row">
                         <div class="grid-item" >
-                            <label >Agrupar duplicata</label>
+                            <label >Pedido à vista</label>
                             <div>
                                 <select>
                                     <option></option>
@@ -288,17 +329,34 @@
                             </div>
                         </div>
                         <div class="grid-item" >
-                            <label >Somente Completo</label>
+                            <label >Prazo em dias</label>
                             <div>
-                                <select>
-                                    <option></option>
-                                    <option>Sim</option>
-                                    <option>Não</option>
-                                </select>
+                                <input type="number"  name="P_CD_PESSOA" autocomplete="off" style="width:45px;margin-right:4px" step="10">
+                                <input type="number"  name="P_CD_PESSOA" autocomplete="off" style="width:45px;margin-right:4px" step="10">
+                                <input type="number"  name="P_CD_PESSOA" autocomplete="off" style="width:45px;margin-right:4px" step="10">
+                                <input type="number"  name="P_CD_PESSOA" autocomplete="off" style="width:45px;margin-right:4px" step="10">
+                                <input type="number"  name="P_CD_PESSOA" autocomplete="off" style="width:45px;margin-right:4px" step="10">
+                                <input type="number"  name="P_CD_PESSOA" autocomplete="off" style="width:45px;margin-right:4px" step="10">
+                                <input type="number"  name="P_CD_PESSOA" autocomplete="off" style="width:45px;margin-right:4px" step="10">
+                                <input type="number"  name="P_CD_PESSOA" autocomplete="off" style="width:45px;margin-right:4px" step="10">
+                                <input type="number"  name="P_CD_PESSOA" autocomplete="off" style="width:45px;margin-right:4px" step="10">
+                                <input type="number"  name="P_CD_PESSOA" autocomplete="off" style="width:45px;margin-right:4px" step="10">
+                            </div>
+                        </div>
+                       
+                    </div>
+                    <div class="grid-row">
+                        <div class="grid-item" >
+                            <label >Prazo em dias</label>
+                            <div>
+                                <input type="date"  name="P_CD_PESSOA" autocomplete="off" style="width:200px;margin-right:20px;">
+                                <input type="date"  name="P_CD_PESSOA" autocomplete="off" style="width:200px;margin-right:20px;">
+                                <input type="date"  name="P_CD_PESSOA" autocomplete="off" style="width:200px;margin-right:20px;">
+                                <input type="date"  name="P_CD_PESSOA" autocomplete="off" style="width:200px;margin-right:20px;">
+                                <input type="date"  name="P_CD_PESSOA" autocomplete="off" style="width:200px;margin-right:20px;">
                             </div>
                         </div>
                     </div>
-                    
                 </form>
 
             </div>
@@ -458,7 +516,7 @@
                         <div class="grid-item" >
                             <label >Cidade</label>
                             <div>
-                                <select name="P_ID_CIDADE">
+                                <select name="P_ID_CIDADE" placeholder="Informe a unidade federativa primeiro">
                                     <option></option>
                                 </select>
                             </div>

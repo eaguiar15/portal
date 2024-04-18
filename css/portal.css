@@ -121,9 +121,42 @@ select {
     height:50px
 }
 
-.form-lov:first-child input{
-    width:50px;
-    background-color: red;;
+.form-lov input:first-child{
+    width:75px;
+}
+.form-lov button{
+    width:30px;
+    height:31px;
+    border-radius: 0;
+    border:0;
+    background-color: #002c63;
+    color:white;
+    margin-left:-5px;
+    border-bottom:1px solid #002c63;
+   
+}
+
+.form-lov button:hover{
+    background-color: #002c63;
+    color:#00b0e6
+
+}
+
+.form-lov input:last-child{
+    width:calc(100% - 75px - 30px - 5px);
+    margin-left:-5px
+}
+
+@media (max-width: 600px) {
+    .form-lov button{
+        width:45px;
+        height:45px;
+    }
+
+    .form-lov input:last-child{
+        width:calc(100% - 75px - 30px - 42px);
+        margin-left:-5px
+    }
 }
 
 .grid-row {
@@ -173,7 +206,7 @@ select {
     
   }
 
-.card{
+.card, .tab{
     background-color: white;
     height:60px;
     width:81%;
@@ -184,6 +217,29 @@ select {
     justify-content: right;
     align-items: center;
 }
+
+.tab{
+    height:45px;
+    border-radius:0;
+    padding-left:3px;
+    justify-content: left;
+
+}
+
+.tab div{
+    width:150px;
+    text-align: center;
+    color:#40444d;
+    font-size:12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    cursor:pointer;
+}
+
+.tab div:hover{
+    background:#00b0e6;
+}
+
 
 .card-grid-header{
     height: 40px;
