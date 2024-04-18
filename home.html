@@ -199,19 +199,20 @@
             </div>
         </div>
         <div id="painel-pedidos-incluir"  >
-             <h1>Pedidos - Inclusão</h1>
-             <div class="tab">
-                    <div class="tab-active">PEDIDO</div>
-                    <div>REDESPACHO</div>
-                    <div>PRAZOS</div>
-             </div>
-             <br>
-             <div class="painel form" style="background-color: white;" >
-                <form id="form-pedidos">
+            <form id="form-pedidos" action="javascript:pedidoInsert">
+                <h1>Pedidos - Inclusão</h1>
+                <div class="tab">
+                        <div class="tab-active">PEDIDO</div>
+                        <div>REDESPACHO</div>
+                        <div>PRAZOS</div>
+                </div>
+                <br>
+            
+                <div class="painel form tab-item"  >
                     <div class="grid-row">
                         <div class="grid-item" >
                             <label >Nr Pedido</label>
-                            <input type="text" name="P_NR_PEDIDO" readonly>
+                            <input type="text" name="P_NR_PEDIDO" readonly value="275895154">
                         </div>
                         <div class="grid-item" >
                             <label >Emissão</label>
@@ -231,16 +232,18 @@
                         <div class="grid-item" >
                             <label >Cliente</label>
                             <div class="form-lov">
-                                <input type="text"  name="P_CD_PESSOA" autocomplete="off">
-                                <button><i class="fas fa-search"></i></button>
-                                <input type="text"  name="P_DM_CNPJ_CPF" autocomplete="off">
+                                <input type="text"  name="P_CD_PESSOA" autocomplete="off" required onchange="dglookup('dg_cliente','form-pedidos',this.value,'P_NM_RAZAO_SOCIAL')">
+                                <button type="button" onclick="openLov('lov_clientes','form-pedidos','P_CD_PESSOA','P_NM_RAZAO_SOCIAL')"><i class="fas fa-search"></i></button>
+                                <input type="text"  name="P_NM_RAZAO_SOCIAL" autocomplete="off">
                             </div>
                         </div>
                         <div class="grid-item">
                             <label >Frete</label>
-                            <select name="P_ID_FRETE">
-                                <option></option></option>
-                            </select>
+                            <div class="form-lov">
+                                <input type="text"  name="P_CD_PESSOA" autocomplete="off" >
+                                <button><i class="fas fa-search"></i></button>
+                                <input type="text"  name="P_DM_CNPJ_CPF" autocomplete="off">
+                            </div>
                         </div>
                     </div> 
                     <div class="grid-row">
@@ -278,9 +281,9 @@
                             <div><textarea></textarea></div>
                         </div>
                     </div>
-                    <div class="grid-row">
-                        <h3 style="text-align: center;">Redespacho</h1>
-                    </div>
+                </div>
+                <div class="painel form tab-item" style="display:none" >
+                   
                     <div class="grid-row">
                         <div class="grid-item" >
                             <label >CNPJ Redespacho</label>
@@ -288,12 +291,6 @@
                                 <input type="text"  name="P_CD_PESSOA" autocomplete="off" >
                                 <button><i class="fas fa-search"></i></button>
                                 <input type="text"  name="P_DM_CNPJ_CPF" autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="grid-item" >
-                            <label >Telefone</label>
-                            <div>
-                                <input type="text"  name="P_CD_PESSOA" autocomplete="off">
                             </div>
                         </div>
                         <div class="grid-item" >
@@ -308,15 +305,22 @@
                     <div class="grid-row">
                         
                         <div class="grid-item" >
+                            <label >Telefone</label>
+                            <div>
+                                <input type="text"  name="P_CD_PESSOA" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="grid-item" >
                             <label >Data despacho</label>
                             <div>
                                 <input type="date"  name="P_CD_PESSOA" autocomplete="off">
                             </div>
                         </div>
                     </div>
-                    <div class="grid-row">
-                        <h3 style="text-align: center;">Prazos</h1>
-                    </div>
+                    <br>
+                </div>
+                <div class="painel form tab-item" style="display:none" >
+
                     <div class="grid-row">
                         <div class="grid-item" >
                             <label >Pedido à vista</label>
@@ -347,7 +351,7 @@
                     </div>
                     <div class="grid-row">
                         <div class="grid-item" >
-                            <label >Prazo em dias</label>
+                            <label >Prazos fixos</label>
                             <div>
                                 <input type="date"  name="P_CD_PESSOA" autocomplete="off" style="width:200px;margin-right:20px;">
                                 <input type="date"  name="P_CD_PESSOA" autocomplete="off" style="width:200px;margin-right:20px;">
@@ -357,13 +361,13 @@
                             </div>
                         </div>
                     </div>
-                </form>
-
-            </div>
-            
-            <br>
-             <button class="button-small" onclick="showPainel('painel-pedidos-pesquisar')">Retornar</button>
-             <button class="button-small button-secondary" onclick="pedidoInsert()" >Salvar</button>
+                    <br>
+                </div>
+                
+                <br>
+                <button class="button-small" onclick="showPainel('painel-pedidos-pesquisar')">Retornar</button>
+                <button class="button-small button-secondary"  type="submit">Salvar</button>
+            </form>
         </div>
         
     </div>
@@ -826,7 +830,27 @@
         </div>
         
       </div>
-    
+    <!-- modal lovs -->
+    <div id="modal-lov" class="modal" >
+        <div class="modal-content">
+          <span onclick="closeModal('modal-lov')" style="cursor: pointer; float: right;">&times;</span>
+          <h1>Lista de valores</h1>
+          <div style="overflow-y: scroll;max-height: 80% ;background-color: #f6f6f7;;" >
+                
+                    <table id="table-lov">
+                        <thead>
+                            <tr>
+                                <th>Cód</th>
+                                <th>Descrição</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+               
+          </div>
+         
+        </div>
+    </div>
 </body>
 </html>
 <script src="js/database.js"></script>

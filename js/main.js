@@ -202,4 +202,68 @@ divs.forEach(function(div) {
         });
     }
 });
+
+function openLov(pEndpoint,pForm,pCampo,pCampo2,pCampo3){
+    openModal("modal-lov");
+    let form = document.getElementById(pForm);
+
+    request = {
+         token : token
+    }
+
+    if(navigator.onLine){
+        ws = new XMLHttpRequest();
+        ws.open("POST",url + pEndpoint,true);
+        ws.onreadystatechange = function(){
+            if ( ws.readyState == 4 && ws.status == 200 ) {
+                
+                document.getElementById("table-lov").innerHTML = ws.response;
+
+                let trs = document.querySelectorAll('#table-lov tr');
+                trs.forEach(function(tr) {
+                    tr.addEventListener('click', function() {
+
+                        if(pCampo !== undefined){
+                            form.querySelector('input[name="' + pCampo + '"]').value = this.cells[0].innerText.trim();
+                        }
+                        if(pCampo2 !== undefined){
+                            form.querySelector('input[name="' + pCampo2 + '"]').value = this.cells[1].innerText.trim(); 
+                        }
+                        if(pCampo3 !== undefined){
+                            form.querySelector('input[name="' + pCampo3 + '"]').value = this.cells[2].innerText.trim(); 
+                        }
+                        closeModal("modal-lov");
+                    });
+                });
+
+            }
+        }
+        ws.send("P_JSON=" + JSON.stringify(request));
+    }else{
+        
+    }
+}
+
+function dglookup(pEndpoint,pForm,pCampo,pCampo2,pCampo3){
+    let form = document.getElementById(pForm);
+    
+    request = {
+        token : token, 
+        campo : pCampo
+    }
+    
+
+    ws = new XMLHttpRequest();
+    ws.open("POST",url + pEndpoint,true);
+    ws.onreadystatechange = function(){
+        if ( ws.readyState == 4 && ws.status == 200 ) {
+            json = JSON.parse(ws.responseText);
+            form.querySelector('input[name="' + pCampo2 + '"]').value = json.campo_ii;
+            if(pCampo3 !== undefined){
+                form.querySelector('input[name="' + pCampo3 + '"]').value = json.campo_iii;
+            }
+        }
+    }
+    ws.send("P_JSON=" + JSON.stringify(request));
+}
   
