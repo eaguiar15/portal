@@ -232,17 +232,17 @@
                         <div class="grid-item" >
                             <label >Cliente</label>
                             <div class="form-lov">
-                                <input type="text"  name="P_CD_PESSOA" autocomplete="off" required onchange="dglookup('dg_cliente','form-pedidos',this.value,'P_NM_RAZAO_SOCIAL')">
+                                <input  type="text"  name="P_CD_PESSOA" autocomplete="off" required onchange="dglookup('dg_cliente','form-pedidos',this.value,'P_NM_RAZAO_SOCIAL')">
                                 <button type="button" onclick="openLov('lov_clientes','form-pedidos','P_CD_PESSOA','P_NM_RAZAO_SOCIAL')"><i class="fas fa-search"></i></button>
-                                <input type="text"  name="P_NM_RAZAO_SOCIAL" autocomplete="off">
+                                <input  type="text"  name="P_NM_RAZAO_SOCIAL" autocomplete="off">
                             </div>
                         </div>
                         <div class="grid-item">
                             <label >Frete</label>
                             <div class="form-lov">
-                                <input type="text"  name="P_CD_PESSOA" autocomplete="off" >
-                                <button><i class="fas fa-search"></i></button>
-                                <input type="text"  name="P_DM_CNPJ_CPF" autocomplete="off">
+                                <input  type="text"  name="P_ID_FRETE" autocomplete="off" required onchange="dglookup('dg_frete','form-pedidos',this.value,'P_NM_FRETE')">
+                                <button type="button" onclick="openLov('lov_fretes','form-pedidos','P_ID_FRETE','P_NM_FRETE')"><i class="fas fa-search"></i></button>
+                                <input  type="text"  name="P_NM_FRETE" autocomplete="off">
                             </div>
                         </div>
                     </div> 
@@ -250,13 +250,13 @@
                         <div class="grid-item" >
                             <label >Ordem de Compra</label>
                             <div>
-                                <input type="text"  name="P_CD_PESSOA" autocomplete="off">
+                                <input type="text"  name="P_NR_ORDEM_COMPRA" autocomplete="off">
                             </div>
                         </div>
                         <div class="grid-item" >
                             <label >Agrupar duplicata</label>
                             <div>
-                                <select>
+                                <select name="P_DM_AGRUPA_DUPL">
                                     <option></option>
                                     <option>Sim</option>
                                     <option>Não</option>
@@ -266,7 +266,7 @@
                         <div class="grid-item" >
                             <label >Somente Completo</label>
                             <div>
-                                <select>
+                                <select name="P_DM_COMPLETO">
                                     <option></option>
                                     <option>Sim</option>
                                     <option>Não</option>

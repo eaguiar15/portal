@@ -251,7 +251,6 @@ function dglookup(pEndpoint,pForm,pCampo,pCampo2,pCampo3){
         token : token, 
         campo : pCampo
     }
-    
 
     ws = new XMLHttpRequest();
     ws.open("POST",url + pEndpoint,true);

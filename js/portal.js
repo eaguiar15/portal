@@ -455,6 +455,9 @@ function printTablePedidos(jPedidos){
     filter.P_CD_PESSOA.value = "";
 }
 
+function pedidoInsert(){
+    
+}
 
 function getCidades(pUF){
     checkConnection();
