@@ -110,7 +110,6 @@
     </div>
     <!-- painel pedidos-->
     <div class="main show" id="painel-pedidos">
-        
         <div id="painel-pedidos-pesquisar" style="display:none">
             <h1>Pedidos</h1>
             <div class="card">
@@ -371,7 +370,70 @@
                     <button class="button-medium button-secondary"  type="submit">Salvar</button>
                 </div>
             </form>
-        </div>
+            <h1>Itens Pedidos</h1>
+            <table class="tPedidos-itens" id="table-pedidos-itens">
+                <thead>
+                    <th>#</th>
+                    <th>Cód</th>
+                    <th>Produto</th>
+                    <th>Quantidade</th>
+                    <th>Preço</th>
+                    <th>% Desc</th>
+                    <th>% Desc.Financeiro</th>
+                    <th>Total</th>
+                    <th></th>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <div class="card card-buttom">
+                <button class="button-medium" onclick="openModal('modal-pedidos-itens');">Adicionar Linha</button>
+            </div>
+            <!-- modal itens pedidos-->
+            <div id="modal-pedidos-itens" class="modal"  >
+                <div class="modal-content" >
+                    <span onclick="closeModal(this.parentNode.parentNode.id)" style="cursor: pointer; float: right;">&times;</span>
+                    <h1>Item Pedido</h1>
+                    <div style="overflow-y: auto;max-height: 90%;">
+                        <form id="form-pedidos-itens" action="javascript:pedidosItensAdd()">
+                            <div class="grid-row">
+                                <div class="grid-item-filter" >
+                                    <div class="form-lov">
+                                        <input  type="text"  name="P_CD_PRODUTO" autocomplete="off" onchange="dglookup('dg_produto','form-pedidos-itens',this.value,'P_NM_PRODUTO')" placeholder="Código">
+                                        <button type="button" onclick="openLov('lov_produtos','form-pedidos-itens','P_CD_PRODUTO','P_NM_PRODUTO')"><i class="fas fa-search"></i></button>
+                                        <input  type="text"  name="P_NM_PRODUTO" autocomplete="off" placeholder="Informe o código do produto" readonly>
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="grid-row">
+                                <div class="grid-item-filter" >
+                                    <input type="number" name="P_QT_ITEM"  placeholder="Quantidade">
+                                </div>
+                            </div>  
+                            <div class="grid-row">
+                                <div class="grid-item-filter" >
+                                    <input type="number" name="P_VL_UNITARIO"  placeholder="Valor unitário">
+                                </div>
+                            </div>  
+                            <div class="grid-row">
+                                <div class="grid-item-filter" >
+                                    <input type="number" name="P_PE_DESCONTO"  placeholder="% Desconto">
+                                </div>
+                            </div>  
+                            <div class="grid-row">
+                                <div class="grid-item-filter" >
+                                    <input type="number" name="P_PE_DESCONTO_FINANCEIRO"  placeholder="% Desconto financeiro">
+                                </div>
+                            </div>  
+                            <div class="grid-row" style="padding-top:30px" >
+                                <div class="grid-item-filter" >
+                                    <button type="submit"  >Incluir</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div><!-- fim div painel incluir-->
         
     </div>
     <!-- painel clientes --> 
@@ -426,8 +488,7 @@
                             <div class="grid-row">
                                 <div class="grid-item-filter" >
                                     <select name="P_CD_SEGMENTO_PESSOA"> 
-                                        <option disabled >Informe um segmento</option>
-                                        <option selected></option>
+                                        <option disabled value="" selected>Informe um segmento</option>
                                         <option value=1011>Atacado / Distribuidor para varejo</option>                         
                                         <option value=1012>Atacado / Distribuidor para escolas / condomínios / parques</option>
                                         <option value=1013>Atacado / Distribuidor para pessoa física (Crediarista)</option>    
@@ -447,8 +508,8 @@
                             <div class="grid-row">
                                 <div class="grid-item-filter" >
                                     <select name="P_NR_REGISTRO">
-                                        <option disabled >Informe o número de registro</option>
-                                        <option value=50 selected>50</option>
+                                        <option disabled value="50" selected>Informe o número de registro</option>
+                                        <option value=50 >50</option>
                                         <option value=100>100</option>
                                         <option value=1000>1000</option>
                                         <option value=100000>Todos</option>
@@ -767,7 +828,7 @@
         </div>
         <div id="modal-filter-produtos" class="modal" >
             <div class="modal-content">
-              <span onclick="closeModal('modal-filter-produtos')" style="cursor: pointer; float: right;">&times;</span>
+              <span onclick="closeModal(this.parentNode.parentNode.id)" style="cursor: pointer; float: right;">&times;</span>
               <h1>Filtro Produtos</h1>
               <div>
                     <form id="filter-produtos" action="javascript:produtosList()">
@@ -778,14 +839,14 @@
                         </div> 
                         <div class="grid-row">
                             <div class="grid-item-filter" >
-                                <input type=number name="P_NM_PRODUTO" placeholder="Nome do produto">
+                                <input type=text name="P_NM_PRODUTO" placeholder="Nome do produto">
                             </div>
                         </div> 
                         <div class="grid-row">
                             <div class="grid-item-filter" >
                                 <select name="P_CD_GRUPO_PRODUTO">
-                                    <option disabled>Informe uma categoria</option>
-                                    <option value=0></option>
+                                    <option disabled value="" >Informe uma categoria</option>
+                                    <option value="" ></option>
                                     <option value=1072>ESCOLAR-MADEIRA            </option>
                                     <option value=1082>ESCRITORIO-MADEIRA         </option>
                                     <option value=1032>ESPORTE E LAZER-MADEIRA    </option>
@@ -806,7 +867,7 @@
                         <div class="grid-row">
                             <div class="grid-item-filter" >
                                 <select name="P_NR_REGISTRO">
-                                    <option disabled >Informe o número de registro</option>
+                                    <option disabled value="50">Informe o número de registros</option>
                                     <option value=50 selected>50</option>
                                     <option value=100>100</option>
                                     <option value=1000>1000</option>
@@ -854,6 +915,9 @@
                         <tbody></tbody>
                     </table>
                
+          </div>
+          <div class="card-buttom">
+              <button class="button-small"  type="submit"  onclick="closeModal('modal-lov');">Filtrar</button>
           </div>
          
         </div>

@@ -67,25 +67,29 @@ function produtosList(){
         iName.value = "";
     }
 
+    let request = {
+        token : token,
+        type  : "html",
+        cd_produto : filter.P_CD_PRODUTO.value,
+        nm_produto : filter.P_NM_PRODUTO.value.trim(),
+        cd_grupo_produto : filter.P_CD_GRUPO_PRODUTO.value,
+        rows : parseInt(filter.P_NR_REGISTRO.value)
+    }
+
     if(navigator.onLine){
         ws = new XMLHttpRequest();
-        ws.open("GET",url + "produtos?" + 
-        "P_ROWS=" + filter.P_NR_REGISTRO.value + "&" + 
-        "P_CD_PRODUTO=" + filter.P_CD_PRODUTO.value + "&" + 
-        "P_NM_PRODUTO=" + filter.P_NM_PRODUTO.value + "&" + 
-        "P_CD_GRUPO_PRODUTO=" + filter.P_CD_GRUPO_PRODUTO.value ,true);
-    
+        ws.open("POST",url + "produtosList",true);
         ws.onreadystatechange = function(){
             if ( ws.readyState == 4 && ws.status == 200 ) {
-                jProdutos = JSON.parse(ws.responseText);
-                printTableProdutos();
+                document.getElementById("table-produtos").children[1].innerHTML = ws.responseText;
+                //jProdutos = JSON.parse(ws.responseText);
+                //printTableProdutos();
             }
         }
-        ws.send();
+        ws.send("P_JSON=" + JSON.stringify(request));
     }else{
         jProdutos = JSON.parse(JSON.stringify(database.produtos));
         printTableProdutos();
-        checkConnection();
     }
 } 
 
@@ -123,7 +127,6 @@ function printTableProdutos(){
 
     }
 
-    filter.P_NM_PRODUTO.value = "";
 }
 
 function printGridProdutos(){
@@ -169,8 +172,14 @@ function printGridProdutos(){
 
 function syncProdutos(pElem){
     pElem.style.background = "#fbf7ea";
+
+    request = {
+        token : token,
+        rows : 99999
+    }
+
     ws = new XMLHttpRequest();
-    ws.open("GET",url + "produtos?P_ROWS=99999",true);
+    ws.open("POST",url + "produtosList",true);
     ws.onreadystatechange = function(){
         if ( ws.readyState == 4 && ws.status == 200 ) {
             database.produtos = JSON.parse(ws.responseText);
@@ -179,7 +188,7 @@ function syncProdutos(pElem){
             pElem.innerText = "Sincronizado";
         }
     }
-    ws.send();
+    ws.send("P_JSON=" + JSON.stringify(request));
 
 }
 
@@ -400,7 +409,7 @@ function pedidosList(){
         cd_segmento_pessoa : filter.P_CD_SEGMENTO_PESSOA.value,
         rows : parseInt(filter.P_NR_REGISTRO.value)
     }
-console.log(request);
+
     if(navigator.onLine){
         ws = new XMLHttpRequest();
         ws.open("POST",url + "pedidosList",true);
@@ -456,6 +465,25 @@ function printTablePedidos(jPedidos){
 
 function pedidoInsert(){
 
+}
+
+function pedidosItensAdd(){
+    form = document.getElementById("form-pedidos-itens");
+    table = document.getElementById("table-pedidos-itens").children[1];
+    table.innerHTML+="<tr>" + 
+        "<td>" + table.rows.length + "</td>" +
+        "<td>" + form.P_CD_PRODUTO.value+ "</td>" +
+        "<td>" + form.P_NM_PRODUTO.value+ "</td>" +
+        "<td>" + form.P_QT_ITEM.value+ "</td>" +
+        "<td>" + form.P_VL_UNITARIO.value+ "</td>" +
+        "<td>" + form.P_PE_DESCONTO.value+ "</td>" +
+        "<td>" + form.P_PE_DESCONTO_FINANCEIRO.value+ "</td>" +
+        "<td>" + (form.P_QT_ITEM.value * form.P_VL_UNITARIO.value).toFixed(2) + "</td>" +
+        "<td></td>" +
+    "</tr>";
+
+     closeModal('modal-pedidos-itens');
+     
 }
 
 function getCidades(pUF){

@@ -115,6 +115,10 @@ function openModal(name) {
              break;
         }
     }
+
+    //if(typeof pAction !== undefined){
+   //     document.getElementById(name).getElementsByTagName("form")[0].action = pAction;
+   // }
  }
 
 function closeModal(name) {

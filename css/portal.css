@@ -135,11 +135,15 @@ select {
     height:50px
 }
 
+
+
 .form-lov input:first-child{
-    width:75px;
+    width:75px !important;
+    padding:0;
 }
+
 .form-lov button{
-    width:30px;
+    width:30px !important;
     height:31px;
     border-radius: 0;
     border:0;
@@ -157,19 +161,29 @@ select {
 }
 
 .form-lov input:last-child{
-    width:calc(100% - 75px - 30px - 5px);
-    margin-left:-5px
+    width:calc(100% - 77px - 30px - 5px);
+    margin-left:-5px;
+    padding:0;
 }
 
 @media (max-width: 600px) {
+    .form-lov{
+        width:calc(100% + 10px);
+    }
+
+    .form-lov input:first-child{
+       height:45px
+    }
+    
     .form-lov button{
         width:45px;
         height:45px;
     }
 
     .form-lov input:last-child{
-        width:calc(100% - 75px - 30px - 42px);
-        margin-left:-5px
+        width:calc(100% - 45px - 60px);
+        padding:0;
+        height:45px;
     }
 }
 
@@ -749,6 +763,7 @@ width:100%;
     width: calc(100% - 10px);
 }
 
+
 @media screen and (max-width: 600px) {
     .modal {
         /* display: flex; */
@@ -826,4 +841,10 @@ width:100%;
     height:25px;
 }
 
+.tPedidos-itens td,.tPedidos-itens th{
+    text-align: right;
+}   
 
+.tPedidos-itens td:nth-child(3),.tPedidos-itens th:nth-child(3){
+    text-align: left;
+}   
