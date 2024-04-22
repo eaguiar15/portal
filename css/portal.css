@@ -1,6 +1,8 @@
 
 :root{
     --primary : #002c63;
+    --light : #00b0e6;
+    --input : #5a5959; 
 }
 
 body{
@@ -63,6 +65,10 @@ tbody tr:hover{
     background-color: #b8daff
 }
 
+.hide-hover tr:hover{
+    background-color: white;
+}
+
 
 tbody td{
     height:50px;
@@ -79,7 +85,8 @@ thead{
 
 select {
     height:50px;
-    border:1px solid #00b0e6
+    border:1px solid var(--light);
+    color:var(--input);
 }
 
 .tProdutos{
@@ -123,7 +130,7 @@ select {
 }
 
 .form textarea{
-    border:1px solid #00b0e6;
+    border:1px solid var(--light);
     width:100%;
     height:50px
 }
@@ -145,7 +152,7 @@ select {
 
 .form-lov button:hover{
     background-color: #002c63;
-    color:#00b0e6
+    color:var(--light);
 
 }
 
@@ -169,8 +176,7 @@ select {
 .grid-row {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    /* grid-gap: 30px; */
-    
+     /* grid-gap: 30px;  */
 }
 
 .grid-item {
@@ -183,8 +189,14 @@ select {
     border-radius: 5px;
 }
 
+.grid-item-filter{
+    padding:4px;
+    padding-top:2px;
+    padding-bottom:2px;
+}
 
-.grid-item label {
+
+.grid-item label, .grid-item-filter label{
     margin-bottom: 5px;
     font-size:13.5px;
 }
@@ -226,6 +238,12 @@ select {
     max-width: 1200px;
 }
 
+.card-buttom{
+    justify-content: left;
+    background-color: #f6f6f7;
+    border:0;
+}
+
 .tab{
     height:45px;
     border-radius:0;
@@ -262,7 +280,7 @@ select {
 }
 
 .tab-active{
-    border-bottom:3px solid #00b0e6;
+    border-bottom:3px solid var(--light);
 }
 
 
@@ -412,7 +430,8 @@ input{
     padding:7px;
     background-color: #f7f7f8;
     border:0;
-    border-bottom:1px solid #00b0e6;
+    border-bottom:1px solid var(--light);
+    color:var(--input);
 }
 
 .input-small{
@@ -425,7 +444,7 @@ input{
 
 button{
     width:100%;
-    border-radius: 10px;
+    border-radius: 7px;
     background-color: #ffd862;
     border: 1px solid #ffd862;
     height: 40px;
@@ -442,7 +461,7 @@ button:hover{
     height:35px;
     font-weight: bold;;
     margin:10px;
-    font-size:11px;
+    font-size:12px;
 }
 
 .button-small-icon{
@@ -457,6 +476,15 @@ button:hover{
 
 .button-small-icon:hover{
     background-color: #405392;
+}
+
+.button-medium{
+    width:175px;
+    height:35px;
+    font-weight: bold;;
+    margin:10px;
+    font-size:11px;
+    border-radius: 3px;
 }
 
 .button-secondary{
@@ -519,8 +547,8 @@ button:hover{
 }
 
 .sidebar .active {
-    border-left:3px solid #00b0e6;
-    color:#00b0e6;
+    border-left:3px solid var(--light);
+    color:var(--light);
 }
 
 .sidebar button div{
@@ -613,8 +641,8 @@ button:hover{
 }
 
 .rightbar .active {
-    border-left:3px solid #00b0e6;
-    color:#00b0e6;
+    border-left:3px solid var(--light);
+    color:var(--light);
 }
 
 .menu-active{
@@ -693,25 +721,32 @@ button:hover{
  }
 
 .modal select{
-    width: 100%;
+    width: calc(100% - 10px);
+    height:44px;
+    margin-top:25px;
 }
 
 .modal table{
 width:100%;
 }
 
-.modal h3{
-    font-size:14px;
+.modal h1{
+    font-size:24px;
+    margin-bottom: 0;
 }
 
 .modal-content {
     background-color: #fff;
     width:50%;
     max-width:500px;
-    max-height: 430px;
+    max-height: 475px;
     height:70%;
     padding: 20px;
     border-radius: 5px;
+}
+
+.modal button{
+    width: calc(100% - 10px);
 }
 
 @media screen and (max-width: 600px) {

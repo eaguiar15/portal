@@ -138,63 +138,65 @@
             </div>
             <div id="modal-filter-pedidos" class="modal" >
                 <div class="modal-content">
-                  <span onclick="closeModal('modal-filter-pedidos')" style="cursor: pointer; float: right;">&times;</span>
-                  <h1>Filtro Pedidos</h1>
-                  <div>
-                        <form id="filter-pedidos">
-                            <table>
-                                <tr>
-                                    <td><h3>Nr Pedido</h3></td>
-                                    <td><input type=number name="P_NR_PEDIDO" placeholder="Informe o número do pedido"></td>
-                                </tr>
-                                <tr>
-                                    <td><h3>Cliente</h3></td>
-                                    <td><input type=text name="P_SEARCH" placeholder="Informe código ou razão social"></td>
-                                </tr>
-                                <tr>
-                                    <td><h3>CNPJ</h3></td>
-                                    <td><input type=text name="P_DM_CNPJ_CPF"></td>
-                                </tr>
-                                <tr>
-                                    <td><h3>Segmento</h3></td>
-                                    <td>
-                                        <select name="P_CD_SEGMENTO_PESSOA"> 
-                                            <option></option>
-                                            <option value=1011>Atacado / Distribuidor para varejo</option>                         
-                                            <option value=1012>Atacado / Distribuidor para escolas / condomínios / parques</option>
-                                            <option value=1013>Atacado / Distribuidor para pessoa física (Crediarista)</option>    
-                                            <option value=1021>Varejo / Loja especializada em brinquedos</option>                  
-                                            <option value=1022>Varejo / Bazar de Utilidades, Presentes e Brinquedos</option>       
-                                            <option value=1023>Varejo / Papelaria</option>                                         
-                                            <option value=1024>Varejo / Supermercado / Hipermercado</option>                       
-                                            <option value=1025>Varejo / Hipermercado</option>                                      
-                                            <option value=1026>Varejo / Rede de Eletromóveis</option>                              
-                                            <option value=1027>Varejo / Loja de Departamento</option>                              
-                                            <option value=1028>Varejo / Loja de artigos esportivos</option>                        
-                                            <option value=1029>Varejo / E-COMMERCE (Exclusivo via site)</option>                   
-                                            <option value=1020>Varejo / outros (especificar)</option>                                
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><h3>Registros</h3></td>
-                                    <td>
-                                        <select name="P_NR_REGISTRO">
-                                            <option value=20>20</option>
-                                            <option value=50>50</option>
-                                            <option value=100>100</option>
-                                            <option value=1000>1000</option>
-                                            <option value=100000>Todos</option>
-                                        </select>
-                                    </td>
-                                </tr>
-    
-                            </table>
-                       </form>
-                  </div>
-                    <br>
-                    <button onclick="pedidosList();closeModal('modal-filter-pedidos');">Filtrar</button>
-                    <br>
+                    <span onclick="closeModal('modal-filter-pedidos')" style="cursor: pointer; float: right;">&times;</span>
+                    <h1>Filtro Pedidos</h1>
+                    <div>
+                        <form id="filter-pedidos" action="javascript:pedidosList()">
+                            <div class="grid-row">
+                                <div class="grid-item-filter" >
+                                    <input type="text" name="P_NR_PEDIDO"  placeholder="Digite o número do pedido">
+                                </div>
+                            </div> 
+                            <div class="grid-row">
+                                <div class="grid-item-filter" >
+                                    <input type="text" name="P_SEARCH"  placeholder="Cód do cliente ou Razão social">
+                                </div>
+                            </div>  
+                            <div class="grid-row">
+                                <div class="grid-item-filter" >
+                                    <input type=text name="P_DM_CNPJ_CPF" placeholder="CNPJ">
+                                </div>
+                            </div>  
+                            <div class="grid-row">
+                                <div class="grid-item-filter" >
+                                    <select name="P_CD_SEGMENTO_PESSOA"> 
+                                        <option disabled >Informe um segmento</option>
+                                        <option selected></option>
+                                        <option value=1011>Atacado / Distribuidor para varejo</option>                         
+                                        <option value=1012>Atacado / Distribuidor para escolas / condomínios / parques</option>
+                                        <option value=1013>Atacado / Distribuidor para pessoa física (Crediarista)</option>    
+                                        <option value=1021>Varejo / Loja especializada em brinquedos</option>                  
+                                        <option value=1022>Varejo / Bazar de Utilidades, Presentes e Brinquedos</option>       
+                                        <option value=1023>Varejo / Papelaria</option>                                         
+                                        <option value=1024>Varejo / Supermercado / Hipermercado</option>                       
+                                        <option value=1025>Varejo / Hipermercado</option>                                      
+                                        <option value=1026>Varejo / Rede de Eletromóveis</option>                              
+                                        <option value=1027>Varejo / Loja de Departamento</option>                              
+                                        <option value=1028>Varejo / Loja de artigos esportivos</option>                        
+                                        <option value=1029>Varejo / E-COMMERCE (Exclusivo via site)</option>                   
+                                        <option value=1020>Varejo / outros (especificar)</option>                                
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="grid-row">
+                                <div class="grid-item-filter" >
+                                    <select name="P_NR_REGISTRO">
+                                        <option disabled >Informe o número de registro</option>
+                                        <option value=50 selected>50</option>
+                                        <option value=100>100</option>
+                                        <option value=1000>1000</option>
+                                        <option value=100000>Todos</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="grid-row" style="padding-top:30px" >
+                                <div class="grid-item-filter" >
+                                    <button type="submit"  onclick="closeModal('modal-filter-pedidos');">Filtrar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                  
                 </div>
             </div>
         </div>
@@ -364,9 +366,10 @@
                     <br>
                 </div>
                 
-                <br>
-                <button class="button-small" onclick="showPainel('painel-pedidos-pesquisar')">Retornar</button>
-                <button class="button-small button-secondary"  type="submit">Salvar</button>
+                <div class="card card-buttom">
+                    <button class="button-medium" onclick="showPainel('painel-pedidos-pesquisar')">Retornar</button>
+                    <button class="button-medium button-secondary"  type="submit">Salvar</button>
+                </div>
             </form>
         </div>
         
@@ -401,62 +404,64 @@
             </div>
             <div id="modal-filter-clientes" class="modal" >
                 <div class="modal-content">
-                  <span onclick="closeModal('modal-filter-clientes')" style="cursor: pointer; float: right;">&times;</span>
-                  <h1>Filtro Clientes</h1>
-                  <div>
-                        <form id="filter-clientes">
-                            <table>
-                                <tr>
-                                    <td><h3>Código</h3></td>
-                                    <td><input type=number name="P_CD_PESSOA"></td>
-                                </tr>
-                                <tr>
-                                    <td><h3>Nome</h3></td>
-                                    <td><input type=text name="P_NM_RAZAO_SOCIAL"></td>
-                                </tr>
-                                <tr>
-                                    <td><h3>CNPJ</h3></td>
-                                    <td><input type=text name="P_DM_CNPJ_CPF"></td>
-                                </tr>
-                                <tr>
-                                    <td><h3>Segmento</h3></td>
-                                    <td>
-                                        <select name="P_CD_SEGMENTO_PESSOA"> 
-                                            <option></option>
-                                            <option value=1011>Atacado / Distribuidor para varejo</option>                         
-                                            <option value=1012>Atacado / Distribuidor para escolas / condomínios / parques</option>
-                                            <option value=1013>Atacado / Distribuidor para pessoa física (Crediarista)</option>    
-                                            <option value=1021>Varejo / Loja especializada em brinquedos</option>                  
-                                            <option value=1022>Varejo / Bazar de Utilidades, Presentes e Brinquedos</option>       
-                                            <option value=1023>Varejo / Papelaria</option>                                         
-                                            <option value=1024>Varejo / Supermercado / Hipermercado</option>                       
-                                            <option value=1025>Varejo / Hipermercado</option>                                      
-                                            <option value=1026>Varejo / Rede de Eletromóveis</option>                              
-                                            <option value=1027>Varejo / Loja de Departamento</option>                              
-                                            <option value=1028>Varejo / Loja de artigos esportivos</option>                        
-                                            <option value=1029>Varejo / E-COMMERCE (Exclusivo via site)</option>                   
-                                            <option value=1020>Varejo / outros (especificar)</option>                                
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><h3>Registros</h3></td>
-                                    <td>
-                                        <select name="P_NR_REGISTRO">
-                                            <option value=50>50</option>
-                                            <option value=100>100</option>
-                                            <option value=1000>1000</option>
-                                            <option value=100000>Todos</option>
-                                        </select>
-                                    </td>
-                                </tr>
-    
-                            </table>
+                    <span onclick="closeModal('modal-filter-clientes')" style="cursor: pointer; float: right;">&times;</span>
+                    <h1>Filtro Clientes</h1>
+                    <div>
+                        <form id="filter-clientes" action="javascript:clientesList()">
+                            <div class="grid-row">
+                                <div class="grid-item-filter" >
+                                    <input type="text" name="P_CD_PESSOA"  placeholder="Código cliente">
+                                </div>
+                            </div> 
+                            <div class="grid-row">
+                                <div class="grid-item-filter" >
+                                    <input type="text" name="P_NM_RAZAO_SOCIAL"  placeholder="Razão social">
+                                </div>
+                            </div>  
+                            <div class="grid-row">
+                                <div class="grid-item-filter" >
+                                    <input type=text name="P_DM_CNPJ_CPF" placeholder="CNPJ">
+                                </div>
+                            </div>  
+                            <div class="grid-row">
+                                <div class="grid-item-filter" >
+                                    <select name="P_CD_SEGMENTO_PESSOA"> 
+                                        <option disabled >Informe um segmento</option>
+                                        <option selected></option>
+                                        <option value=1011>Atacado / Distribuidor para varejo</option>                         
+                                        <option value=1012>Atacado / Distribuidor para escolas / condomínios / parques</option>
+                                        <option value=1013>Atacado / Distribuidor para pessoa física (Crediarista)</option>    
+                                        <option value=1021>Varejo / Loja especializada em brinquedos</option>                  
+                                        <option value=1022>Varejo / Bazar de Utilidades, Presentes e Brinquedos</option>       
+                                        <option value=1023>Varejo / Papelaria</option>                                         
+                                        <option value=1024>Varejo / Supermercado / Hipermercado</option>                       
+                                        <option value=1025>Varejo / Hipermercado</option>                                      
+                                        <option value=1026>Varejo / Rede de Eletromóveis</option>                              
+                                        <option value=1027>Varejo / Loja de Departamento</option>                              
+                                        <option value=1028>Varejo / Loja de artigos esportivos</option>                        
+                                        <option value=1029>Varejo / E-COMMERCE (Exclusivo via site)</option>                   
+                                        <option value=1020>Varejo / outros (especificar)</option>                                
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="grid-row">
+                                <div class="grid-item-filter" >
+                                    <select name="P_NR_REGISTRO">
+                                        <option disabled >Informe o número de registro</option>
+                                        <option value=50 selected>50</option>
+                                        <option value=100>100</option>
+                                        <option value=1000>1000</option>
+                                        <option value=100000>Todos</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="grid-row" style="padding-top:30px" >
+                                <div class="grid-item-filter" >
+                                    <button type="submit"  onclick="closeModal('modal-filter-clientes');">Filtrar</button>
+                                </div>
+                            </div>
                        </form>
                   </div>
-                    <br>
-                    <button onclick="clientesList();closeModal('modal-filter-clientes');">Filtrar</button>
-                    <br>
                 </div>
             </div>
         </div>
@@ -586,9 +591,10 @@
 
             </div>
             
-            <br>
-             <button class="button-small" onclick="showPainel('painel-clientes-pesquisar')">Retornar</button>
-             <button class="button-small button-secondary" onclick="clienteInsert()" >Salvar</button>
+            <div class="card card-buttom">
+                <button class="button-medium" onclick="showPainel('painel-clientes-pesquisar')">Retornar</button>
+                <button class="button-medium button-secondary" onclick="clienteInsert()" >Salvar</button>
+             </div>
         </div>
         <div id="painel-clientes-atualizar" style="display:none">
             <h1>Clientes - Alteração</h1>
@@ -708,9 +714,10 @@
 
            </div>
            
-           <br>
-            <button class="button-small" onclick="showPainel('painel-clientes-pesquisar')">Retornar</button>
-            <button class="button-small button-secondary" onclick="clienteUpdate()">Salvar</button>
+           <div class="card card-buttom">
+                <button class="button-medium" onclick="showPainel('painel-clientes-pesquisar')">Retornar</button>
+                <button class="button-medium button-secondary" onclick="clienteUpdate()">Salvar</button>
+            </div>
        </div>
     </div>
     <!-- painel produtos-->
@@ -763,57 +770,57 @@
               <span onclick="closeModal('modal-filter-produtos')" style="cursor: pointer; float: right;">&times;</span>
               <h1>Filtro Produtos</h1>
               <div>
-                    <form id="filter-produtos">
-                        <table>
-                            <tr>
-                                <td><h3>Código</h3></td>
-                                <td><input type=number name="P_CD_PRODUTO"></td>
-                            </tr>
-                            <tr>
-                                <td><h3>Nome</h3></td>
-                                <td><input type=text name="P_NM_PRODUTO"></td>
-                            </tr>
-                            <tr>
-                                <td><h3>Categoria</h3></td>
-                                <td>
-                                    <select name="P_CD_GRUPO_PRODUTO">
-                                        <option value=0></option>
-                                        <option value=1072>ESCOLAR-MADEIRA            </option>
-                                        <option value=1082>ESCRITORIO-MADEIRA         </option>
-                                        <option value=1032>ESPORTE E LAZER-MADEIRA    </option>
-                                        <option value=1141>FUMAGEIRAS-PLASTICO        </option>
-                                        <option value=1151>IMPORTADOS-DIVERSOS        </option>
-                                        <option value=1022>JOGOS E BRINQUEDOS-MADEIRA </option>
-                                        <option value=1021>JOGOS E BRINQUEDOS-PLASTICO</option>
-                                        <option value=1062>PEDAGOGICOS-MADEIRA        </option>
-                                        <option value=1921>PRODUTOS INOMAX-PLASTICO   </option>
-                                        <option value=1051>ROTOMOLDADOS-PLASTICO      </option>
-                                        <option value=1923>SERVICOS INOMAX            </option>
-                                        <option value=1011>TRICICLOS-PLASTICO         </option>
-                                        <option value=1101>UTILIDADES-PLASTICO        </option>
-                                        <option value=1042>XADREZ-MADEIRA             </option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><h3>Registros</h3></td>
-                                <td>
-                                    <select name="P_NR_REGISTRO">
-                                        <option value=50>50</option>
-                                        <option value=100>100</option>
-                                        <option value=1000>1000</option>
-                                        <option value=100000>Todos</option>
-                                    </select>
-                                </td>
-                            </tr>
-
-                        </table>
+                    <form id="filter-produtos" action="javascript:produtosList()">
+                        <div class="grid-row">
+                            <div class="grid-item-filter" >
+                                <input type=number name="P_CD_PRODUTO" placeholder="Código do produto">
+                            </div>
+                        </div> 
+                        <div class="grid-row">
+                            <div class="grid-item-filter" >
+                                <input type=number name="P_NM_PRODUTO" placeholder="Nome do produto">
+                            </div>
+                        </div> 
+                        <div class="grid-row">
+                            <div class="grid-item-filter" >
+                                <select name="P_CD_GRUPO_PRODUTO">
+                                    <option disabled>Informe uma categoria</option>
+                                    <option value=0></option>
+                                    <option value=1072>ESCOLAR-MADEIRA            </option>
+                                    <option value=1082>ESCRITORIO-MADEIRA         </option>
+                                    <option value=1032>ESPORTE E LAZER-MADEIRA    </option>
+                                    <option value=1141>FUMAGEIRAS-PLASTICO        </option>
+                                    <option value=1151>IMPORTADOS-DIVERSOS        </option>
+                                    <option value=1022>JOGOS E BRINQUEDOS-MADEIRA </option>
+                                    <option value=1021>JOGOS E BRINQUEDOS-PLASTICO</option>
+                                    <option value=1062>PEDAGOGICOS-MADEIRA        </option>
+                                    <option value=1921>PRODUTOS INOMAX-PLASTICO   </option>
+                                    <option value=1051>ROTOMOLDADOS-PLASTICO      </option>
+                                    <option value=1923>SERVICOS INOMAX            </option>
+                                    <option value=1011>TRICICLOS-PLASTICO         </option>
+                                    <option value=1101>UTILIDADES-PLASTICO        </option>
+                                    <option value=1042>XADREZ-MADEIRA             </option>
+                                </select>
+                            </div>
+                        </div> 
+                        <div class="grid-row">
+                            <div class="grid-item-filter" >
+                                <select name="P_NR_REGISTRO">
+                                    <option disabled >Informe o número de registro</option>
+                                    <option value=50 selected>50</option>
+                                    <option value=100>100</option>
+                                    <option value=1000>1000</option>
+                                    <option value=100000>Todos</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="grid-row" style="padding-top:100px" >
+                            <div class="grid-item-filter" >
+                                <button type="submit"  onclick="closeModal('modal-filter-produtos');">Filtrar</button>
+                            </div>
+                        </div>
                    </form>
               </div>
-              
-              <br> 
-              <br>
-              <button onclick="produtosList();closeModal('modal-filter-produtos');">Filtrar</button>
             </div>
           </div>
     </div>

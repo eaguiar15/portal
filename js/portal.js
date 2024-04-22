@@ -202,7 +202,8 @@ function clientesList(){
         rows : parseInt(filter.P_NR_REGISTRO.value)
     }
 
-    
+    console.log(request);
+
 
     if(navigator.onLine){
         ws = new XMLHttpRequest();
@@ -399,19 +400,18 @@ function pedidosList(){
         cd_segmento_pessoa : filter.P_CD_SEGMENTO_PESSOA.value,
         rows : parseInt(filter.P_NR_REGISTRO.value)
     }
-
-    filter.reset();
-
+console.log(request);
     if(navigator.onLine){
         ws = new XMLHttpRequest();
         ws.open("POST",url + "pedidosList",true);
-    
         ws.onreadystatechange = function(){
             if ( ws.readyState == 4 && ws.status == 200 ) {
                 console.log(ws.responseText);
                 printTablePedidos(JSON.parse(ws.responseText));
+                filter.reset(); 
             }
         }
+
         ws.send("P_JSON=" + JSON.stringify(request));
     }else{
         
@@ -419,11 +419,12 @@ function pedidosList(){
 }
 
 function printTablePedidos(jPedidos){
-    let filter = document.getElementById("filter-clientes");
+    let filter = document.getElementById("filter-pedidos");
     table = document.getElementById("table-pedidos").children[1];
     table.innerHTML = "";
        
     let rows = 0;
+    console.log(filter.P_NR_REGISTRO.value);
     for(let a in jPedidos){
 
         // if((filter.P_CD_PESSOA.value == jClientes[a].cd_pessoa || filter.P_CD_PESSOA.value == "" ) &&
@@ -450,13 +451,11 @@ function printTablePedidos(jPedidos){
         }
 
     }
-
-    filter.P_NM_RAZAO_SOCIAL.value = "";
-    filter.P_CD_PESSOA.value = "";
+   
 }
 
 function pedidoInsert(){
-    
+
 }
 
 function getCidades(pUF){
