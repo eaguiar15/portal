@@ -61,7 +61,8 @@ function logout(){
 function produtosList(){
     checkConnection();
     let filter = document.getElementById("filter-produtos");
-    let iName = document.getElementById("input-filter-produtos");
+    let iName  = document.getElementById("input-filter-produtos");
+    let type   = document.getElementById("show-grid-produtos").className == "fas fa-th"?"html/table":"html/grid";
     if(iName.value.trim() != ""){
         filter.P_NM_PRODUTO.value = iName.value ;
         iName.value = "";
@@ -69,7 +70,7 @@ function produtosList(){
 
     let request = {
         token : token,
-        type  : "html",
+        type  : type,
         cd_produto : filter.P_CD_PRODUTO.value,
         nm_produto : filter.P_NM_PRODUTO.value.trim(),
         cd_grupo_produto : filter.P_CD_GRUPO_PRODUTO.value,
@@ -81,100 +82,31 @@ function produtosList(){
         ws.open("POST",url + "produtosList",true);
         ws.onreadystatechange = function(){
             if ( ws.readyState == 4 && ws.status == 200 ) {
-                document.getElementById("table-produtos").children[1].innerHTML = ws.responseText;
-                //jProdutos = JSON.parse(ws.responseText);
-                //printTableProdutos();
+                console.log(ws.responseText);
+                if(type == "html/table"){
+                    document.getElementById("table-produtos").innerHTML = ws.responseText;
+                }else{
+                    document.getElementById("grid-produtos").innerHTML = ws.responseText;
+                }
             }
         }
         ws.send("P_JSON=" + JSON.stringify(request));
     }else{
         jProdutos = JSON.parse(JSON.stringify(database.produtos));
-        printTableProdutos();
+        if(type == "html/table"){
+            printTableProdutos();
+        }else{
+            printGridProdutos();
+        }
     }
 } 
-
-
-function printTableProdutos(){
-    if(document.getElementById("show-grid-produtos").className == "fas fa-table"){
-        printGridProdutos();
-        return;
-    }
-    let filter = document.getElementById("filter-produtos");
-    table = document.getElementById("table-produtos").children[1];
-    table.innerHTML = "";
-    grid = document.getElementById("grid-produtos");
-    grid.innerHTML = "";
-    
-    let rows = 0;
-    for(let a in jProdutos){
-
-        if((filter.P_CD_PRODUTO.value == jProdutos[a].cd_produto || filter.P_CD_PRODUTO.value == "" ) &&
-            (filter.P_CD_GRUPO_PRODUTO.value == jProdutos[a].cd_grupo_produto || filter.P_CD_GRUPO_PRODUTO.value == 0 ) &&
-            (jProdutos[a].nm_produto.indexOf(filter.P_NM_PRODUTO.value.toUpperCase()) != -1 || filter.P_NM_PRODUTO.value == jProdutos[a].cd_produto ||filter.P_NM_PRODUTO.value == "" )){
-            
-            table.innerHTML+="<tr>" + 
-            "<td> " + (++rows) + "</td>" + 
-            "<td> " + jProdutos[a].cd_produto + "</td>" + 
-            "<td> " + jProdutos[a].nm_produto + "</td>" + 
-            "<td> " + jProdutos[a].nm_grupo_produto + "</td>" + 
-            "<td> " + jProdutos[a].vl_preco_produto.toFixed(2) + "</td>" + 
-            "</tr>" ;
-        }
-
-        if(rows >= filter.P_NR_REGISTRO.value){
-            break;
-        }
-
-    }
-
-}
-
-function printGridProdutos(){
-    let filter = document.getElementById("filter-produtos");
-    grid = document.getElementById("grid-produtos");
-    grid.innerHTML = "";
-    
-    let rows = 0;
-    for(let a in jProdutos){
-        if((filter.P_CD_PRODUTO.value == jProdutos[a].cd_produto || filter.P_CD_PRODUTO.value == "" ) &&
-           (filter.P_CD_GRUPO_PRODUTO.value == jProdutos[a].cd_grupo_produto || filter.P_CD_GRUPO_PRODUTO.value == 0 ) &&
-           (jProdutos[a].nm_produto.indexOf(filter.P_NM_PRODUTO.value.toUpperCase()) != -1 || filter.P_NM_PRODUTO.value == jProdutos[a].cd_produto ||filter.P_NM_PRODUTO.value == "" )){
-
-            grid.innerHTML+=
-            " <div class='card show' style='height: 200px;' >" +
-            "   <div class='card-grid-header'><span>" + jProdutos[a].cd_produto + " - " + jProdutos[a].nm_produto + "</span></div>" +
-            "       <div class='card-grid-body'>" + 
-            "            <div class='card-grid-body-img'> " +
-            "            <img src='"+ jProdutos[a].url_imagem + "'> " +
-            "       </div> " +
-            "       <div class='card-grid-body-item'> " +
-            "               <div style='width:calc(100% - 10px);text-align:center'>" + jProdutos[a].nm_grupo_produto + "</div> " +
-            "       </div> " +
-            "        <div class='card-grid-body-item'> " +
-            "                <div>Medidas</div> " +
-            "                <div>0 x 0 x 0</div> " +
-            "         </div> " +
-            "       <div class='card-grid-body-item'> " +
-            "                <div>Preço</div> " +
-            "                <div>" + jProdutos[a].vl_preco_produto.toFixed(2) + " R$</div> " +
-            "       </div> " +
-            "     </div> " + 
-            "</div>" +
-            "<br>";
-        }
-
-        if(rows >= filter.P_NR_REGISTRO.value){
-            break;
-        }
-
-    }
-}
 
 function syncProdutos(pElem){
     pElem.style.background = "#fbf7ea";
 
     request = {
         token : token,
+        type  : "json",
         rows : 99999
     }
 
@@ -204,14 +136,13 @@ function clientesList(){
 
     let request = {
         token : token,
+        type  : "html",
         cd_pessoa : filter.P_CD_PESSOA.value,
         nm_razao_social : filter.P_NM_RAZAO_SOCIAL.value.trim(),
         dm_cnpj_cpf : filter.P_DM_CNPJ_CPF.value.trim().replaceAll(".","").replaceAll("-","").replaceAll("/",""),
         cd_segmento_pessoa : filter.P_CD_SEGMENTO_PESSOA.value,
         rows : parseInt(filter.P_NR_REGISTRO.value)
     }
-
-    console.log(request);
 
 
     if(navigator.onLine){
@@ -220,7 +151,7 @@ function clientesList(){
     
         ws.onreadystatechange = function(){
             if ( ws.readyState == 4 && ws.status == 200 ) {
-                printTableClientes(JSON.parse(ws.responseText));
+                document.getElementById("table-clientes").innerHTML = ws.responseText;
                 filter.reset();
             }
         }
@@ -356,41 +287,6 @@ function clienteUpdate(){
     }
 }
 
-function printTableClientes(jClientes){
-    let filter = document.getElementById("filter-clientes");
-    table = document.getElementById("table-clientes").children[1];
-    table.innerHTML = "";
-       
-    let rows = 0;
-    for(let a in jClientes){
-
-        if((filter.P_CD_PESSOA.value == jClientes[a].cd_pessoa || filter.P_CD_PESSOA.value == "" ) &&
-          (filter.P_DM_CNPJ_CPF.value.replace(/\D/g, '') == jClientes[a].dm_cnpj_cpf.replace(/\D/g, '') || filter.P_DM_CNPJ_CPF.value == 0 ) &&
-          (filter.P_CD_SEGMENTO_PESSOA.value == jClientes[a].cd_segmento_pessoa || filter.P_CD_SEGMENTO_PESSOA.value == "" ) &&
-          (jClientes[a].nm_razao_social.indexOf(filter.P_NM_RAZAO_SOCIAL.value.toUpperCase()) != -1 || filter.P_NM_RAZAO_SOCIAL.value == jClientes[a].cd_pessoa ||filter.P_NM_RAZAO_SOCIAL.value == "" )
-        ){
-            
-            table.innerHTML+="<tr>" + 
-            "<td> " + (++rows) + "</td>" + 
-            "<td> " + jClientes[a].cd_pessoa + "</td>" + 
-            "<td> " + jClientes[a].nm_razao_social + "</td>" + 
-            "<td> " + formatarCNPJ(jClientes[a].dm_cnpj_cpf) + "</td>" + 
-            "<td> " + jClientes[a].nm_segmento_pessoa + "</td>" + 
-            "<td> " + jClientes[a].dt_cadastro + "</td>" + 
-            "<td onclick=\"getCliente(" + jClientes[a].cd_pessoa + ")\"><i class='fas fa-edit'></i></td>" + 
-            "</tr>" ;
-        }
-
-        if(rows >= filter.P_NR_REGISTRO.value){
-            break;
-        }
-
-    }
-
-    filter.P_NM_RAZAO_SOCIAL.value = "";
-    filter.P_CD_PESSOA.value = "";
-}
-
 function pedidosList(){
     checkConnection();
     
@@ -403,6 +299,7 @@ function pedidosList(){
 
     let request = {
         token : token,
+        type  : "html",
         cd_pessoa : filter.P_NR_PEDIDO.value,
         nm_razao_social : filter.P_SEARCH.value.trim(),
         dm_cnpj_cpf : filter.P_DM_CNPJ_CPF.value.trim().replaceAll(".","").replaceAll("-","").replaceAll("/",""),
@@ -415,8 +312,9 @@ function pedidosList(){
         ws.open("POST",url + "pedidosList",true);
         ws.onreadystatechange = function(){
             if ( ws.readyState == 4 && ws.status == 200 ) {
-                console.log(ws.responseText);
-                printTablePedidos(JSON.parse(ws.responseText));
+                document.getElementById("table-pedidos").innerHTML = ws.responseText;
+                //console.log(ws.responseText);
+                //printTablePedidos(JSON.parse(ws.responseText));
                 filter.reset(); 
             }
         }

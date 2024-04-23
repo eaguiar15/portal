@@ -116,10 +116,7 @@ function openModal(name) {
         }
     }
 
-    //if(typeof pAction !== undefined){
-   //     document.getElementById(name).getElementsByTagName("form")[0].action = pAction;
-   // }
- }
+}
 
 function closeModal(name) {
     document.getElementById(name).style.display = 'none';
@@ -131,12 +128,13 @@ function showGrid(pElem){
         pElem.className = "fas fa-table";
         document.getElementById("grid-produtos").classList.remove("hide");
         document.getElementById("table-produtos").classList.toggle("hide");
-        printGridProdutos();
+        if(document.getElementById("grid-produtos").innerHTML.trim() == ""){
+            produtosList();
+        }
     }else{
         pElem.className = "fas fa-th";
         document.getElementById("grid-produtos").classList.toggle("hide");
         document.getElementById("table-produtos").classList.remove("hide");
-        
     }
 }
 
@@ -208,12 +206,32 @@ divs.forEach(function(div) {
 });
 
 function openLov(pEndpoint,pForm,pCampo,pCampo2,pCampo3){
+    
+    request = {
+        token : token,
+        search : document.getElementById("lov-search").children[0].value.toUpperCase()
+    }
+    // remove eventos e adiciona novamente
+    let elemento = document.getElementById("lov-search").children[1];
+    let novoElemento = elemento.cloneNode(true);
+    elemento.parentNode.replaceChild(novoElemento, elemento);
+    elemento = document.getElementById("lov-search").children[0];
+    novoElemento = elemento.cloneNode(true);
+    elemento.parentNode.replaceChild(novoElemento, elemento);
+
+    document.getElementById("lov-search").children[1].addEventListener("click",function(){
+        openLov(pEndpoint,pForm,pCampo,pCampo2,pCampo3);
+    });
+
+    document.getElementById("lov-search").children[0].addEventListener("keyup",function(){
+         if (event.keyCode === 13) {
+             openLov(pEndpoint,pForm,pCampo,pCampo2,pCampo3);
+         }
+     });
+
+     console.log(request);
     openModal("modal-lov");
     let form = document.getElementById(pForm);
-
-    request = {
-         token : token
-    }
 
     if(navigator.onLine){
         ws = new XMLHttpRequest();
@@ -246,6 +264,7 @@ function openLov(pEndpoint,pForm,pCampo,pCampo2,pCampo3){
     }else{
         
     }
+    document.getElementById("lov-search").children[0].value = "";
 }
 
 function dglookup(pEndpoint,pForm,pCampo,pCampo2,pCampo3){
@@ -268,5 +287,22 @@ function dglookup(pEndpoint,pForm,pCampo,pCampo2,pCampo3){
         }
     }
     ws.send("P_JSON=" + JSON.stringify(request));
+}
+
+function filterLov(pSearch){
+   
+     let table = document.getElementById("table-lov").children[1];
+     pSearch  = pSearch.toUpperCase();
+
+
+     for(let a in  table.rows){
+        //console.log("->" + table.rows[a].innerText);
+        if(table.rows[a].innerText.indexOf(pSearch) !== -1){
+            table.rows[a].style.display = "";
+        }else{
+            table.rows[a].style.display = "none";
+        }
+     }
+ 
 }
   

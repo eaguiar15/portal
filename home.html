@@ -466,7 +466,7 @@
             </div>
             <div id="modal-filter-clientes" class="modal" >
                 <div class="modal-content">
-                    <span onclick="closeModal('modal-filter-clientes')" style="cursor: pointer; float: right;">&times;</span>
+                    <span onclick="closeModal(this.parentNode.parentNode.id)" style="cursor: pointer; float: right;">&times;</span>
                     <h1>Filtro Clientes</h1>
                     <div>
                         <form id="filter-clientes" action="javascript:clientesList()">
@@ -649,7 +649,6 @@
                         </div> -->
                     </div>
                 </form>
-
             </div>
             
             <div class="card card-buttom">
@@ -789,7 +788,7 @@
             <button class="button-small-icon" onclick="openModal('modal-filter-produtos')" title="Filtrar"><i class="fas fa-filter "></i></button>
             <button class="button-small" onclick="produtosList()">Pesquisar</button>
        </div>
-        <h3 >Lista de Produtos    <i class="fas fa-th " onclick="showGrid(this)" id="show-grid-produtos"></i> </h3>
+        <h3 >Lista de Produtos    <i class="fas fa-th" onclick="showGrid(this)" id="show-grid-produtos"></i> </h3>
        <div class="painel">
            <table class="tProdutos " id="table-produtos">
                <thead>
@@ -803,28 +802,7 @@
                 </thead>
                 <tbody></tbody>
             </table>
-            <div  class="hide" id="grid-produtos">
-                <div class="card show" style="height: 200px;" >
-                    <div class="card-grid-header"><span>59909 -  BINGO PEDRAS DE MADEIRA</span></div>
-                    <div class="card-grid-body">
-                        <div class="card-grid-body-img">
-                            <img src="https://xalingo.vteximg.com.br/arquivos/ids/159202-1000-1000/1327.6---Ludo-Tridimensional-Spidey.jpg?v=63827100650l230000" >
-                        </div>
-                        <div class="card-grid-body-item">
-                                <div>Categoria</div><div>Brinquedos</div>
-                        </div>
-                        <div class="card-grid-body-item">
-                                <div>Medidas</div>
-                                <div>20 x 24 x10</div>
-                        </div>
-                        <div class="card-grid-body-item">
-                                <div>Preço</div>
-                                <div>19.50 R$</div>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
+            <div  class="hide" id="grid-produtos"></div>
         </div>
         <div id="modal-filter-produtos" class="modal" >
             <div class="modal-content">
@@ -901,29 +879,32 @@
     <!-- modal lovs -->
     <div id="modal-lov" class="modal" >
         <div class="modal-content">
-          <span onclick="closeModal('modal-lov')" style="cursor: pointer; float: right;">&times;</span>
-          <h1>Lista de valores</h1>
-          <div style="overflow-y: scroll;max-height: 80% ;background-color: #f6f6f7;;" >
-                
-                    <table id="table-lov">
-                        <thead>
-                            <tr>
-                                <th>Cód</th>
-                                <th>Descrição</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-               
-          </div>
-          <div class="card-buttom">
-              <button class="button-small"  type="submit"  onclick="closeModal('modal-lov');">Filtrar</button>
-          </div>
-         
+                <span onclick="closeModal('modal-lov')" style="cursor: pointer; float: right;">&times;</span>
+                <h1>Lista de valores</h1>
+                <div style="overflow-y: scroll;max-height: 80% ;background-color: #f6f6f7;" >
+                        
+                            <table id="table-lov">
+                                <thead>
+                                    <tr>
+                                        <th>Cód</th>
+                                        <th>Descrição</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                    
+                </div>
+                <div class="card-buttom" id="lov-search">
+                    <input type="text" style="width:70%;height:20px;margin-left:5px;" name="P_SEARCH" autocomplete="off" >
+                    <button type="button" class="button-medium" type="submit"  style="width:20%" >Filtrar</button>
+                </div>
         </div>
     </div>
+    <!-- modal filter generic -->
+    <div id="modal-filter" class="modal"></div>
 </body>
-</html>
 <script src="js/database.js"></script>
 <script src="js/main.js"></script>
+<script src="js/offline.js"></script>
 <script src="js/portal.js"></script>
+</html>
